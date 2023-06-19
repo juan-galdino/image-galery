@@ -1,0 +1,17 @@
+ul {
+  display: flex;
+}
+
+li {
+  margin-right: 2rem;
+  padding: 1rem 0;
+}
+
+a {
+  color: black;
+  font-size: 1.2rem;
+}
+
+a:hover {
+  color: hsl(197, 57%, 46%);
+}
