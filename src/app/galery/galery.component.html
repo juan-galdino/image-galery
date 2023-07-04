@@ -1,1 +1,6 @@
 <h2>Galery</h2>
+<ul>
+  <li *ngFor="let url of imagesUrls">
+    <img [src]="url" alt="" style="width: 4.5rem" />
+  </li>
+</ul>
