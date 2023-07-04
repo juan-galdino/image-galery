@@ -17,7 +17,7 @@ export class UploadImagesComponent {
 
   onUploadFile() {
     if(this.selectedFile) {
-      const filePath = 'uploads/' + this.selectedFile.name
+      const filePath = 'uploads/' + crypto.randomUUID() + this.selectedFile.name
       this.firebaseStorageService.uploadFile(this.selectedFile, filePath).then(
         url => console.log('Arquivo enviado com sucesso!', url )
       ).catch(
