@@ -7,16 +7,11 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { GaleryComponent } from './galery/galery.component';
-import { UploadImagesComponent } from './upload-images/upload-images.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    GaleryComponent,
-    UploadImagesComponent
   ],
   imports: [
     BrowserModule,
