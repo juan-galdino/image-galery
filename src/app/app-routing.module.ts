@@ -1,15 +1,13 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { GaleryComponent } from "./galery/galery.component";
-import { UploadImagesComponent } from "./upload-images/upload-images.component";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", component: GaleryComponent },
-  { path: "upload", component: UploadImagesComponent } 
+  { path: "", loadChildren: () => import('./galery/galery.module').then(m => m.GaleryModule), pathMatch: 'full' },
+  { path: "upload", loadChildren: () => import('./upload-images/upload-images.module').then(m => m.UploadImagesModule) } 
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]  
 })
 export class AppRoutingModule {}
