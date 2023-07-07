@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { map, of } from 'rxjs';
+import { Observable, Subject, finalize, map, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +9,23 @@ export class FirebaseStorageService {
 
   private imagesUrls: string[] = []
   private hasNewImage = false
+  messageSubject = new Subject<string>()
 
   constructor(private storage: AngularFireStorage) { }
 
-  uploadFile(file: File, path: string): Promise<string> {
+  uploadFile(file: File, path: string): Observable<number | undefined> {
     const fileRef = this.storage.ref(path)
     const task = fileRef.put(file)
 
-    return new Promise((resolve, reject) => {
-      task.then(() => {
-        fileRef.getDownloadURL().subscribe( (url: string )=> {
-          this.hasNewImage = true
-          resolve(url)
-        })
+    return task.percentageChanges().pipe(
+      tap( () => {
+        this.messageSubject.next('')
+      }),
+      finalize( () => {
+        this.hasNewImage = true
+        this.messageSubject.next('Envio concluído!')
       })
-      .catch(error => {
-        reject(error)
-      })
-    })
+    )
   }
 
   getImagesUrls() {
