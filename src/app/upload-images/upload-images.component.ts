@@ -9,11 +9,11 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   styleUrls: ['./upload-images.component.css']
 })
 export class UploadImagesComponent implements OnInit, OnDestroy {
-  selectedFile: File | null = null
   $uploadProgress!: Observable<number | undefined>
   isUploading = false
   message!: string
   messageSubscription!: Subscription
+  files: any[] = []
 
   constructor(private storage: AngularFireStorage, private firebaseStorageService: FirebaseStorageService) {}
 
@@ -23,16 +23,34 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
     })  
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0]
+  onFileDropped(file: File) {
+    this.uploadFile(file)
   }
 
-  onUploadFile() {
-    if(this.selectedFile) {
-      this.isUploading = true
-      const filePath = 'uploads/' + crypto.randomUUID() + this.selectedFile.name
-      this.$uploadProgress = this.firebaseStorageService.uploadFile(this.selectedFile, filePath)
+  onFileSelected(event: any) {
+    if(event.target.files) {
+      this.uploadFile(event.target.files[0])
     }
+  }
+
+  uploadFile(file: File) {
+    this.files.push(file)
+    this.isUploading = true
+    const filePath = 'uploads/' + crypto.randomUUID() + file.name
+    this.$uploadProgress = this.firebaseStorageService.uploadFile(file, filePath)
+  }
+
+  formatBytes(bytes: number): string {
+    if(bytes === 0) {
+      return '0 bytes'
+    }
+
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    // return the file size to at least 2 decimals
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   ngOnDestroy(): void {

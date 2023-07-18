@@ -1,10 +1,21 @@
+nav {
+  display: flex;
+  justify-content: center;
+}
+
 ul {
   display: flex;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  width: 80%;
+  border-radius: 2.5rem;
+  padding: 0.5rem;
 }
 
 li {
-  margin-right: 2rem;
-  padding: 1rem 0;
+  padding: 1rem 2rem;
+  border-radius: 2.5rem;
+  text-align: center;
 }
 
 a {
@@ -14,4 +25,12 @@ a {
 
 a:hover {
   color: hsl(197, 57%, 46%);
+}
+
+.active {
+  background-color: black;
+}
+
+.active a {
+  color: white;
 }
