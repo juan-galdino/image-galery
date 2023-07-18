@@ -1,6 +1,13 @@
 <h2>Galery</h2>
 <ul>
-  <li *ngFor="let url of imagesUrls">
-    <img [src]="url" alt="" style="width: 4.5rem" />
+  <li class="single-image" *ngFor="let data of images; let i = index">
+    <div class="image">
+      <img [src]="data.url" alt="" />
+    </div>
+    <div class="info">
+      <h4>{{ data.name }}</h4>
+      <p>{{ data.size }}</p>
+      <p>{{ data.timeCreated }}</p>
+    </div>
   </li>
 </ul>

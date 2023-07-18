@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, Subject, finalize, map, of, tap } from 'rxjs';
+import { ImageProps } from './shared/image-props.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseStorageService {
 
-  private imagesUrls: string[] = []
+  private images: ImageProps[] = []
   private hasNewImage = false
   messageSubject = new Subject<string>()
 
@@ -28,20 +29,68 @@ export class FirebaseStorageService {
     )
   }
 
-  getImagesUrls() {
-    if(this.imagesUrls.length !== 0 && !this.hasNewImage) {
-      return of(this.imagesUrls)
+  getImagesUrls(): Observable<ImageProps[]> {
+    if(this.images.length !== 0 && !this.hasNewImage) {
+      return of(this.images)
     }
     return this.storage.ref('uploads/').listAll().pipe(
       map(res => {
-        const urls: string[] = []
+        let allImages: ImageProps[] = []
+
         res.items.forEach(itemRef => {
-          itemRef.getDownloadURL().then(url => urls.push(url))
+          let imageMetaData: any
+
+          // get data
+          itemRef.getMetadata().then(res => {
+            imageMetaData = res
+          })
+          
+          // get url
+          itemRef.getDownloadURL().then(url => {
+            let imageData = new ImageProps(
+              this.formatImageName(imageMetaData.name), 
+              this.formatImageSize(imageMetaData.size), 
+              this.formatDate(imageMetaData.timeCreated), 
+              url
+            )
+            allImages.push(imageData)
+          })
         })
+
         this.hasNewImage = false
-        this.imagesUrls = urls
-        return urls
+        this.images = allImages
+        return this.images
       }),
     )
+  }
+
+  formatImageName(fileName: string): string {
+    return fileName.substring(36) // remove uuid characters
+  }
+
+  formatImageSize(bytes: number): string {
+    if(bytes === 0) {
+      return '0 bytes'
+    }
+
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    // return the file size to at least 2 decimals
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+  }
+
+  formatDate(timeCreated: string): string {
+    const date = new Date(timeCreated)
+    const options: Intl.DateTimeFormatOptions = { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric',
+      hour:'numeric' ,
+      minute:'numeric',
+      second:'numeric'
+    }
+    return date.toLocaleDateString('pt-BR', options);
   }
 }
