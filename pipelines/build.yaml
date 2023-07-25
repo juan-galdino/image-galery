@@ -7,10 +7,10 @@ steps:
         "gcr.io/${_FIREBASE_PROJECT_ID}/firebase",
         "./dockerfiles/firebase",
       ]
-  - name: "node:16.10"
+  - name: "node:16.14"
     entrypoint: "npm"
     args: ["install"]
-  - name: "node:16.10"
+  - name: "node:16.14"
     entrypoint: "npm"
     args: ["run", "build"]
   - name: "gcr.io/${_FIREBASE_PROJECT_ID}/firebase"
