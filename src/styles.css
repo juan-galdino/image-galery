@@ -22,3 +22,7 @@ li {
 a {
   text-decoration: none;
 }
+
+mat-form-field.no-padding-on-errors-globally .mat-mdc-form-field-error-wrapper {
+  padding: 0;
+}
