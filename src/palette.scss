@@ -1,0 +1,28 @@
+$black-palette: (
+  50: #e6e6e6,
+  100: #cccccc,
+  200: #b3b3b3,
+  300: #999999,
+  400: #808080,
+  500: #000000,
+  600: #4d4d4d,
+  700: #333333,
+  800: #1a1a1a,
+  900: #000000,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffffff,
+  A700: #ffffff,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  ),
+);

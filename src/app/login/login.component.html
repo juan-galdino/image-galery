@@ -42,8 +42,18 @@
       color="primary"
       test-id="login-button"
       [disabled]="!form.valid"
+      (click)="onLogin()"
+      *ngIf="!isLoggingIn"
     >
       Login
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      test-id="login-loader"
+      *ngIf="isLoggingIn"
+    >
+      <mat-spinner color="accent" diameter="25"></mat-spinner>
     </button>
     <button mat-stroked-button>Cadastrar</button>
   </form>

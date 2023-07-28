@@ -27,10 +27,6 @@ button:not(button[mat-button]) {
   border-radius: 50px;
 }
 
-button[color="primary"]:not(:disabled) {
-  background-color: black;
-}
-
 .aligned-to-right {
   text-align: right;
   width: 100%;

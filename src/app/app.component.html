@@ -1,8 +1,8 @@
 <main class="container">
-  <div *ngIf="!user">
+  <div>
     <router-outlet name="authentication"></router-outlet>
   </div>
-  <div *ngIf="user">
+  <div>
     <app-header></app-header>
     <router-outlet></router-outlet>
   </div>
