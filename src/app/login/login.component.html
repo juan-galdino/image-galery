@@ -30,11 +30,20 @@
     </mat-form-field>
     <div class="aligned-to-right">
       <button
+        *ngIf="!isRecoveringPassword"
+        (click)="recoverPassword()"
         mat-button
         test-id="forgot-password-button"
         [disabled]="!form.get('email')!.valid"
       >
         Esqueci minha senha
+      </button>
+      <button
+        *ngIf="isRecoveringPassword"
+        mat-button
+        test-id="forgot-password-loader"
+      >
+        <mat-spinner color="primary" diameter="25"></mat-spinner>
       </button>
     </div>
     <button

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
-import { Observable, Subject, from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
-  // temporary service
-
-  private user = new Subject<boolean>()
-  _signInResponse = new Subject()
+export class AuthenticationService {
 
   constructor(
     private auth: AngularFireAuth
   ) { }
+
+  recoverPassword(email: string): Observable<void> {
+    return from(this.auth.sendPasswordResetEmail(email))
+  }
 
   login(params: SignIn): Observable<any> {
     return from(
@@ -21,14 +21,6 @@ export class LoginService {
         params.email, params.password
       )
     )
-  }
-
-  getUser() {
-    return this.user.asObservable()
-  }
-
-  setUser(value: boolean) {
-    this.user.next(value)
   }
 }
 

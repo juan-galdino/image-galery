@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from './login/login.service';
+import { AuthenticationService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +9,12 @@ import { LoginService } from './login/login.service';
 })
 export class AppComponent implements OnInit {
   user = false
-  constructor(private router: Router, private loginService: LoginService) {}
+  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     // fake temporary guard
     if(!this.user) {
       this.router.navigate(["login"])
     }
-    
-    // fake temporary authenticating
-     this.loginService.getUser().subscribe(value => {
-      this.user = value
-     })
   }
 }
