@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 
 import { LoginComponent } from './login.component';
 import { BlankComponent } from '../mocks/blank/blank.component';
-import { AuthenticationService } from '../auth.service';
+import { AuthenticationService } from '../auth/auth.service'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MatInputModule } from '@angular/material/input';

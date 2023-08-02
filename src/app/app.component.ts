@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +6,8 @@ import { AuthenticationService } from './auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  user = false
-  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
-    // fake temporary guard
-    if(!this.user) {
-      this.router.navigate(["login"])
-    }
+   
   }
 }

@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GaleryComponent } from './galery.component';
+import { authGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: GaleryComponent }
+  { path: '', component: GaleryComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({
