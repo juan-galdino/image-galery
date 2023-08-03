@@ -1,19 +1,20 @@
-nav {
+header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 ul {
   display: flex;
-  justify-content: space-between;
   background-color: #f8f8f8;
-  width: 80%;
+  border: 1px solid #ebeff2;
   border-radius: 2.5rem;
-  padding: 0.5rem;
+  padding: 0.25rem;
 }
 
 li {
-  padding: 1rem 2rem;
+  padding: 1rem;
   border-radius: 2.5rem;
   text-align: center;
 }
@@ -27,10 +28,40 @@ a:hover {
   color: hsl(197, 57%, 46%);
 }
 
-.active {
+.active,
+.active a {
   background-color: black;
+  color: white;
+  fill: #ffffff;
+  border: none;
 }
 
-.active a {
-  color: white;
+button {
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #ebeff2;
+  outline: none;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  transition: background-color 0.2s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+button:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0rem;
+  height: 4rem;
+  transition: width 0.15s ease;
+  background-color: rgba(255, 255, 255, 0.2);
+  filter: contrast(0.5);
+}
+
+button:active:after {
+  width: 4rem;
 }
