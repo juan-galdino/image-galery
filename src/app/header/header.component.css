@@ -1,8 +1,12 @@
+section {
+  position: relative;
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 ul {
@@ -22,6 +26,7 @@ li {
 a {
   color: black;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 a:hover {
@@ -58,10 +63,42 @@ button:after {
   width: 0rem;
   height: 4rem;
   transition: width 0.15s ease;
-  background-color: rgba(255, 255, 255, 0.2);
-  filter: contrast(0.5);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 button:active:after {
   width: 4rem;
+}
+
+.settings-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2px;
+  background-color: #ffffff;
+  border: 1px solid #ebeff2;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: 250px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: -100%;
+  right: 1.5rem;
+  z-index: 5;
+}
+
+.settings-box a {
+  padding: 0.5rem;
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.settings-box a svg {
+  vertical-align: sub;
+  margin-right: 0.25rem;
+}
+
+.settings-box a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
 }

@@ -36,6 +36,10 @@ export class AuthenticationService {
       )
     )
   }
+
+  logout(): void {
+    this.auth.signOut()
+  }
 }
 
 type SignIn = {
