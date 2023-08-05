@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GaleryComponent } from './galery.component';
-import { authGuard } from '../auth/auth.guard';
+import { UploadImagesComponent } from './upload-images.component';
 
 const routes: Routes = [
-  { path: '', component: GaleryComponent, canActivate: [authGuard] }
+  { path:'', component: UploadImagesComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class GaleryRoutingModule { }
+export class UploadImagesRoutingModule { }

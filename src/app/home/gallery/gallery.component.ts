@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseStorageService } from '../firebase-storage.service';
-import { ImageProps } from '../shared/image-props.model';
+import { FirebaseStorageService } from '../../firebase-storage.service';
+import { ImageProps } from '../../shared/image-props.model';
 
 @Component({
-  selector: 'app-galery',
-  templateUrl: './galery.component.html',
-  styleUrls: ['./galery.component.css']
+  selector: 'app-gallery',
+  templateUrl: './gallery.component.html',
+  styleUrls: ['./gallery.component.css']
 })
-export class GaleryComponent implements OnInit {
+export class GalleryComponent implements OnInit {
   images: ImageProps[] = []
   
   constructor(private firebaseStorageService: FirebaseStorageService) {}

@@ -38,7 +38,7 @@ describe('LoginComponent', () => {
         MatButtonModule,
         MatProgressSpinnerModule,
         RouterTestingModule.withRoutes([
-          { path: 'gallery', component: BlankComponent }
+          { path: 'home/galeria', component: BlankComponent }
         ])
       ],
       providers: [Location]
@@ -108,7 +108,7 @@ describe('LoginComponent', () => {
 
         it('should then navigate to the gallery page', done => {
           setTimeout( () => {
-            expect(location.path()).toEqual('/gallery')
+            expect(location.path()).toEqual('/home/galeria')
             done()
           }, 100)
         })

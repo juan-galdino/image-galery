@@ -35,8 +35,7 @@ export class LoginComponent implements OnInit {
       email: this.form.value.email,
       password: this.form.value.password
     }).subscribe( (data) => {
-      console.log(data)
-      this.router.navigate(['gallery'])
+      this.router.navigate(['home/galeria'])
     }, (error: any) => {
       this.isLoggingIn = false
       this.snackBar.open(error.message, 'OK', {

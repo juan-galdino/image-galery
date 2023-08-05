@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FirebaseStorageService } from '../firebase-storage.service';
+import { FirebaseStorageService } from '../../firebase-storage.service';
 import { Observable, Subscription } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
