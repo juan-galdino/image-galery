@@ -21,6 +21,7 @@
   <h3>ou</h3>
   <label for="fileDropRef">Clique para procurar em seu dispostivo</label>
 </div>
+
 <div *ngIf="isUploading" class="files-list">
   <div class="single-file" *ngFor="let file of files; let i = index">
     <div class="info">
@@ -30,7 +31,16 @@
       <p class="size">
         {{ formatBytes(file.size) }}
       </p>
-      <progress [value]="$uploadProgress | async"></progress>
+      <mat-progress-bar
+        *ngIf="!($uploadProgress | async)"
+        mode="indeterminate"
+      ></mat-progress-bar>
+      <mat-progress-bar
+        *ngIf="$uploadProgress | async"
+        mode="determinate"
+        [value]="$uploadProgress | async"
+      ></mat-progress-bar>
+
       {{ message }}
     </div>
   </div>

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 import { Observable, Subscription } from 'rxjs';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-upload-images',
@@ -15,7 +14,7 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   messageSubscription!: Subscription
   files: any[] = []
 
-  constructor(private storage: AngularFireStorage, private firebaseStorageService: FirebaseStorageService) {}
+  constructor(private firebaseStorageService: FirebaseStorageService) {}
 
   ngOnInit(): void {
     this.messageSubscription = this.firebaseStorageService.messageSubject.subscribe(value => {

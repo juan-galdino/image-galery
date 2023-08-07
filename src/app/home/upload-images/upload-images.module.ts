@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UploadImagesRoutingModule } from './upload-images-routing.module';
 import { UploadImagesComponent } from './upload-images.component';
 import { DragAndDropDirective } from '../../shared/drag-and-drop.directive';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { DragAndDropDirective } from '../../shared/drag-and-drop.directive';
   ],
   imports: [
     CommonModule,
-    UploadImagesRoutingModule
+    UploadImagesRoutingModule,
+    MatProgressBarModule
   ]
 })
 export class UploadImagesModule { }
