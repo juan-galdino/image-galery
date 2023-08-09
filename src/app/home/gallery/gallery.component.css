@@ -1,10 +1,16 @@
 .single-image {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
 li {
-  padding: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ebeff2;
+}
+
+ul {
+  border-top: 1px solid #ebeff2;
 }
 
 img {
