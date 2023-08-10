@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, Subject, finalize, map, of, tap } from 'rxjs';
+import { Observable, Subject, finalize, from, map, mergeMap, of, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
+import firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseStorageService {
 
-  private images: ImageProps[] = []
+  images: ImageProps[] = []
   private hasNewImage = false
   messageSubject = new Subject<string>()
+  private _isLoaddingSub = new Subject<boolean>()
 
   constructor(private storage: AngularFireStorage) { }
 
@@ -29,16 +31,19 @@ export class FirebaseStorageService {
     )
   }
 
-  getImagesUrls(): Observable<ImageProps[]> {
+  getImagesUrls(userId: string): Observable<ImageProps[]> {
     if(this.images.length !== 0 && !this.hasNewImage) {
       return of(this.images)
     }
-    return this.storage.ref('uploads/').listAll().pipe(
+
+    this._isLoaddingSub.next(true)
+
+    return this.storage.ref('users/'+ userId + '/uploads').list().pipe(
       map(res => {
         let allImages: ImageProps[] = []
 
         res.items.forEach(itemRef => {
-          let imageMetaData: any
+          let imageMetaData: firebase.storage.FullMetadata
 
           // get data
           itemRef.getMetadata().then(res => {
@@ -48,7 +53,7 @@ export class FirebaseStorageService {
           // get url
           itemRef.getDownloadURL().then(url => {
             let imageData = new ImageProps(
-              this.formatImageName(imageMetaData.name), 
+              imageMetaData.name, 
               this.formatImageSize(imageMetaData.size), 
               this.formatDate(imageMetaData.timeCreated), 
               url
@@ -58,10 +63,15 @@ export class FirebaseStorageService {
         })
 
         this.hasNewImage = false
+        this._isLoaddingSub.next(false)
         this.images = allImages
         return this.images
       }),
-    )
+      )
+  }
+
+  get isLoadding$() {
+    return this._isLoaddingSub.asObservable()
   }
 
   formatImageName(fileName: string): string {

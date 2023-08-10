@@ -1,4 +1,5 @@
 <ul>
+  <div *ngIf="isLoadding$ | async">Carregando imagens...</div>
   <li class="single-image" *ngFor="let data of images; let i = index">
     <div class="image">
       <img [src]="data.url" alt="" />

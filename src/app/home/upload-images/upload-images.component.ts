@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 import { Observable, Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/auth/auth.service';
+import firebase from 'firebase/compat';
 
 @Component({
   selector: 'app-upload-images',
@@ -13,10 +15,20 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   message!: string
   messageSubscription!: Subscription
   files: any[] = []
+  loggedUser!: firebase.User | null
 
-  constructor(private firebaseStorageService: FirebaseStorageService) {}
+  constructor(
+    private authService: AuthenticationService,
+    private firebaseStorageService: FirebaseStorageService
+  ) {}
 
   ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      if(user) {
+        this.loggedUser = user
+      }
+    })
+
     this.messageSubscription = this.firebaseStorageService.messageSubject.subscribe(value => {
       this.message = value
     })  
@@ -33,10 +45,12 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   }
 
   uploadFile(file: File) {
-    this.files.push(file)
-    this.isUploading = true
-    const filePath = 'uploads/' + crypto.randomUUID() + file.name
-    this.$uploadProgress = this.firebaseStorageService.uploadFile(file, filePath)
+    if(this.loggedUser) {
+      this.files.push(file)
+      this.isUploading = true
+      const filePath = 'users/'+ this.loggedUser.uid +'/uploads/' + file.name
+      this.$uploadProgress = this.firebaseStorageService.uploadFile(file, filePath)
+    }
   }
 
   formatBytes(bytes: number): string {

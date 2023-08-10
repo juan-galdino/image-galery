@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Observable, from, shareReplay } from 'rxjs';
+import firebase from 'firebase/compat';
+import { FirebaseStorageService } from '../firebase-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  user$: Observable<firebase.User | null>
+
   private isAuthenticated$: Observable<boolean>
 
   constructor(
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private firebaseStorageService: FirebaseStorageService
   ) {
+    this.user$ = this.auth.authState
+
     this.isAuthenticated$ = new Observable<boolean>(observer => {
       this.auth.onAuthStateChanged(user => {
         observer.next(!!user)
@@ -38,6 +45,7 @@ export class AuthenticationService {
   }
 
   logout(): void {
+    this.firebaseStorageService.images = []
     this.auth.signOut()
   }
 }
