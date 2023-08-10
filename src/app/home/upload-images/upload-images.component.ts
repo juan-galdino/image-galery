@@ -16,6 +16,7 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   messageSubscription!: Subscription
   files: any[] = []
   loggedUser!: firebase.User | null
+  userSubscription!: Subscription | null
 
   constructor(
     private authService: AuthenticationService,
@@ -23,7 +24,7 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
+     this.userSubscription = this.authService.user$.subscribe(user => {
       if(user) {
         this.loggedUser = user
       }
@@ -68,5 +69,6 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.messageSubscription.unsubscribe()
+    this.userSubscription?.unsubscribe()
   }
 }

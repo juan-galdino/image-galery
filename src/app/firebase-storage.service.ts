@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, Subject, finalize, from, map, mergeMap, of, tap } from 'rxjs';
+import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
-import firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
@@ -39,35 +38,42 @@ export class FirebaseStorageService {
     this._isLoaddingSub.next(true)
 
     return this.storage.ref('users/'+ userId + '/uploads').list().pipe(
-      map(res => {
-        let allImages: ImageProps[] = []
-
-        res.items.forEach(itemRef => {
-          let imageMetaData: firebase.storage.FullMetadata
-
-          // get data
-          itemRef.getMetadata().then(res => {
-            imageMetaData = res
-          })
-          
-          // get url
-          itemRef.getDownloadURL().then(url => {
-            let imageData = new ImageProps(
-              imageMetaData.name, 
-              this.formatImageSize(imageMetaData.size), 
-              this.formatDate(imageMetaData.timeCreated), 
-              url
-            )
-            allImages.push(imageData)
-          })
+      mergeMap(listResult => {
+        const arrayOfObservables$ = listResult.items.map(itemRef => {
+          return from(Promise.all([              // the result both promises in an array for each item.
+            itemRef.getMetadata(),
+            itemRef.getDownloadURL()
+          ])).pipe(
+            map(([metadata, url]) => {
+              return { metadata, url }          // return itemRef as an object
+            })
+          )
         })
 
-        this.hasNewImage = false
-        this._isLoaddingSub.next(false)
-        this.images = allImages
-        return this.images
-      }),
-      )
+        return forkJoin(arrayOfObservables$).pipe(     // takes an array of observables and transforms into one
+          map(arrayOfImagesWithMetadata => {    
+            const allImages: ImageProps[] = arrayOfImagesWithMetadata.map(image => {
+              return new ImageProps(
+                image.metadata.name,
+                this.formatImageSize(image.metadata.size),
+                this.formatDate(image.metadata.timeCreated),
+                image.url
+              )
+            })
+
+            this.hasNewImage = false
+            this._isLoaddingSub.next(false)
+            this.images = allImages
+            return this.images
+          }),
+
+          catchError(error => {
+            console.log(error)
+            return of([])
+          })
+        )
+      })
+    )
   }
 
   get isLoadding$() {
