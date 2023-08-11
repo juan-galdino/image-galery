@@ -60,5 +60,9 @@ export class LoginComponent implements OnInit {
       })
     })
   }
+
+  goToSignupPage() {
+    this.router.navigate(['/cadastro'])
+  }
   
 }

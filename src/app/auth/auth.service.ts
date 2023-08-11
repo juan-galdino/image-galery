@@ -36,9 +36,17 @@ export class AuthenticationService {
     return from(this.auth.sendPasswordResetEmail(email))
   }
 
-  login(params: SignIn): Observable<any> {
+  login(params: UserSignature): Observable<any> {
     return from(
       this.auth.signInWithEmailAndPassword(
+        params.email, params.password
+      )
+    )
+  }
+
+  signup(params: UserSignature): Observable<any> {
+    return from(
+      this.auth.createUserWithEmailAndPassword(
         params.email, params.password
       )
     )
@@ -50,7 +58,7 @@ export class AuthenticationService {
   }
 }
 
-type SignIn = {
+type UserSignature = {
   email: string,
   password: string
 }

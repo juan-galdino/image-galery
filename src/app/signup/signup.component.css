@@ -1,0 +1,28 @@
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 18.75rem;
+}
+
+button,
+mat-form-field {
+  width: -webkit-fill-available;
+}
+
+button[mat-button] {
+  width: auto;
+  font-weight: bold;
+}
+
+button:not(button[mat-button]) {
+  border-radius: 50px;
+}

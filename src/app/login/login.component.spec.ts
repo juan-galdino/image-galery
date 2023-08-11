@@ -38,7 +38,8 @@ describe('LoginComponent', () => {
         MatButtonModule,
         MatProgressSpinnerModule,
         RouterTestingModule.withRoutes([
-          { path: 'home/galeria', component: BlankComponent }
+          { path: 'home/galeria', component: BlankComponent },
+          { path: 'cadastro', component: BlankComponent }
         ])
       ],
       providers: [Location]
@@ -123,7 +124,7 @@ describe('LoginComponent', () => {
 
         it('then do not go to gallery page', done => {
           setTimeout( () => {
-            expect(location.path()).not.toEqual('/gallery')
+            expect(location.path()).not.toEqual('/home/galeria')
             done()
           }, 100)
         })
@@ -230,6 +231,26 @@ describe('LoginComponent', () => {
     })
 
   })
+
+  describe('Navigates to signup page flow', () => {
+
+    describe('given user clicks on heads to signup page button', () => {
+
+      beforeEach(() => {
+        headsToSignupPageButton().click()
+        fixture.detectChanges()
+      })
+  
+      it('should then navigate to the signup page', done => {
+        setTimeout( () => {
+          expect(location.path()).toEqual('/cadastro')
+          done()
+        }, 100)
+      })
+  
+    })
+
+  })
   
   function setEmail(value: string) {
     component.form.get('email')?.setValue(value)
@@ -251,6 +272,10 @@ describe('LoginComponent', () => {
 
   function loginButton(): HTMLButtonElement {
     return page.querySelector('[test-id="login-button"]')
+  }
+
+  function headsToSignupPageButton(): HTMLButtonElement {
+    return page.querySelector('[test-id="heads-to-signup-page-button"]')
   }
 
   function loginLoader(): HTMLButtonElement  {
