@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
-import { Observable, from, shareReplay } from 'rxjs';
+import { Observable, catchError, from, shareReplay, switchMap } from 'rxjs';
 import firebase from 'firebase/compat';
 import { FirebaseStorageService } from '../firebase-storage.service';
 
@@ -49,6 +49,18 @@ export class AuthenticationService {
       this.auth.createUserWithEmailAndPassword(
         params.email, params.password
       )
+    ).pipe(
+      switchMap(userCredential => {
+        const user = userCredential.user
+        
+        return from(user!.updateProfile({
+          displayName: params.name
+        }))
+
+      }),
+      catchError((error: any) => {
+        throw error
+      })
     )
   }
 
@@ -59,6 +71,7 @@ export class AuthenticationService {
 }
 
 type UserSignature = {
+  name?: string,
   email: string,
   password: string
 }

@@ -33,6 +33,7 @@ export class SignupComponent implements OnInit {
     this.isUserBeingCreated = true
 
     this.authService.signup({
+      name: this.form.value.name,
       email: this.form.value.email,
       password: this.form.value.password
     }).subscribe(() => {
