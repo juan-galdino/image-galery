@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 export class GalleryComponent implements OnInit, OnDestroy {
   images: ImageProps[] = []
   isLoadding$!: Observable<boolean>
+  isImagesArrayEmpty$!: Observable<boolean>
   userSubscription!: Subscription | null
   imagesSubscription!: Subscription | null
 
@@ -27,6 +28,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       }
     })
     this.isLoadding$ = this.firebaseStorageService.isLoadding$
+    this.isImagesArrayEmpty$ = this.firebaseStorageService.isImagesArrayEmpty$
   }
 
   fetchImages(userId: string) {

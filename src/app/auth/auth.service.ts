@@ -66,6 +66,8 @@ export class AuthenticationService {
 
   logout(): void {
     this.firebaseStorageService.images = []
+    this.firebaseStorageService.isImagesArrayEmpty.next(false)
+    this.firebaseStorageService.isListResultEmpty = false
     this.auth.signOut()
   }
 }

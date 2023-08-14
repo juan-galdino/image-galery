@@ -1,13 +1,21 @@
-<ul>
+<section>
+  <div class="no-images-container" *ngIf="isImagesArrayEmpty$ | async">
+    <p>
+      Dê às suas imagens um lar digital seguro. Vá para a página de novo upload,
+      suba suas imagens e volte para gerenciar sua nova galeria neste espaço!
+    </p>
+  </div>
   <div *ngIf="isLoadding$ | async">Carregando imagens...</div>
-  <li class="single-image" *ngFor="let data of images; let i = index">
-    <div class="image">
-      <img [src]="data.url" alt="" />
-    </div>
-    <div class="info">
-      <h4>{{ data.name }}</h4>
-      <p>{{ data.size }}</p>
-      <p>{{ data.timeCreated }}</p>
-    </div>
-  </li>
-</ul>
+  <ul>
+    <li class="single-image" *ngFor="let data of images; let i = index">
+      <div class="image">
+        <img [src]="data.url" alt="" />
+      </div>
+      <div class="info">
+        <h4>{{ data.name }}</h4>
+        <p>{{ data.size }}</p>
+        <p>{{ data.timeCreated }}</p>
+      </div>
+    </li>
+  </ul>
+</section>
