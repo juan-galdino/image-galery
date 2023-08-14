@@ -55,7 +55,7 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   }
 
   formatBytes(bytes: number): string {
-    return this.firebaseStorageService.formatImageSize(bytes)
+    return this.firebaseStorageService.formatImageSize(bytes) 
   }
 
   ngOnDestroy(): void {
