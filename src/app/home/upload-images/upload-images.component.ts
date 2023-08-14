@@ -55,16 +55,7 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   }
 
   formatBytes(bytes: number): string {
-    if(bytes === 0) {
-      return '0 bytes'
-    }
-
-    const k = 1024
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-    // return the file size to at least 2 decimals
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+    return this.firebaseStorageService.formatImageSize(bytes)
   }
 
   ngOnDestroy(): void {
