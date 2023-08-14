@@ -9,8 +9,11 @@ import { ImageProps } from './shared/image-props.model';
 export class FirebaseStorageService {
 
   images: ImageProps[] = []
+  isListResultEmpty = false
   private hasNewImage = false
+  
   messageSubject = new Subject<string>()
+  isImagesArrayEmpty = new Subject<boolean>()
   private _isLoaddingSub = new Subject<boolean>()
 
   constructor(private storage: AngularFireStorage) { }
@@ -25,6 +28,8 @@ export class FirebaseStorageService {
       }),
       finalize( () => {
         this.hasNewImage = true
+        this.isListResultEmpty = false
+        this.isImagesArrayEmpty.next(false)
         this.messageSubject.next('Envio concluído!')
       })
     )
@@ -35,10 +40,23 @@ export class FirebaseStorageService {
       return of(this.images)
     }
 
-    this._isLoaddingSub.next(true)
+    if(this.isListResultEmpty) {
+      this.isImagesArrayEmpty.next(true) 
+      return of([])
+    }
 
     return this.storage.ref('users/'+ userId + '/uploads').list().pipe(
       mergeMap(listResult => {
+        
+        // need to know if user doesn't have any images storaged
+        if(listResult.items.length === 0) {
+          this.isListResultEmpty = true 
+          this.isImagesArrayEmpty.next(true)
+          return of([])
+        }
+
+        this._isLoaddingSub.next(true)
+
         const arrayOfObservables$ = listResult.items.map(itemRef => {
           return from(Promise.all([              // the result both promises in an array for each item.
             itemRef.getMetadata(),
@@ -63,25 +81,26 @@ export class FirebaseStorageService {
 
             this.hasNewImage = false
             this._isLoaddingSub.next(false)
+            this.isListResultEmpty = false
             this.images = allImages
             return this.images
-          }),
-
-          catchError(error => {
-            console.log(error)
-            return of([])
-          })
+          })      
         )
+      }),
+      
+      catchError(error => {
+        console.log(error)
+        return of([])
       })
     )
   }
 
-  get isLoadding$() {
-    return this._isLoaddingSub.asObservable()
+  get isImagesArrayEmpty$() {
+    return this.isImagesArrayEmpty.asObservable()
   }
 
-  formatImageName(fileName: string): string {
-    return fileName.substring(36) // remove uuid characters
+  get isLoadding$() {
+    return this._isLoaddingSub.asObservable()
   }
 
   formatImageSize(bytes: number): string {
