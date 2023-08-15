@@ -1,9 +1,22 @@
 <section>
-  <div class="no-images-container" *ngIf="isImagesArrayEmpty$ | async">
+  <article class="no-images-container" *ngIf="isImagesArrayEmpty$ | async">
+    <app-no-images-image></app-no-images-image>
+    <article class="text">
+      <h3>Você ainda não tem imagens salvas nesta galeria.</h3>
     <p>
-      Dê às suas imagens um lar digital seguro. Vá para a página de novo upload,
-      suba suas imagens e volte para gerenciar sua nova galeria neste espaço!
+        Dê às suas imagens um lar digital seguro. Vá para a página de novo
+        upload, adicione uma ou mais imagens e volte para gerenciar sua galeria
+        neste espaço!
     </p>
+      <button
+        (click)="headsToUploadImagesPage()"
+        mat-raised-button
+        color="primary"
+      >
+        Ir para página de novo upload
+      </button>
+    </article>
+  </article>
   </div>
   <div *ngIf="isLoadding$ | async">Carregando imagens...</div>
   <ul>

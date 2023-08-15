@@ -18,7 +18,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthenticationService,
-    private firebaseStorageService: FirebaseStorageService
+    private firebaseStorageService: FirebaseStorageService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +38,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }, (error: any) => {
       console.log(error)
     })
+  }
+
+  headsToUploadImagesPage() {
+    this.router.navigate(['home/upload'])
   }
 
   ngOnDestroy(): void {
