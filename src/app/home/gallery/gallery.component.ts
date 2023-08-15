@@ -2,7 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 import { ImageProps } from '../../shared/image-props.model';
 import { AuthenticationService } from 'src/app/auth/auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, catchError } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from './dialog-content/dialog-content.component';
 
 @Component({
   selector: 'app-gallery',
@@ -20,6 +23,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private firebaseStorageService: FirebaseStorageService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +46,22 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   headsToUploadImagesPage() {
     this.router.navigate(['home/upload'])
+  }
+
+  openDialog(imageName: string) {
+    const dialogRef = this.dialog.open(DialogContentComponent, {
+      data: { name: imageName }
+    })
+
+    dialogRef.afterClosed().pipe(
+      catchError(err => {
+        throw err
+      })
+    ).subscribe(result => {
+      if(result) {
+        console.log(result)
+      }
+    })
   }
 
   ngOnDestroy(): void {

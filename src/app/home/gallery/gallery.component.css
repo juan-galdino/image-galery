@@ -2,6 +2,13 @@ section {
   border-top: 1px solid #ebeff2;
 }
 
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
 .no-images-container {
   display: flex;
   flex-direction: column;
@@ -35,7 +42,7 @@ h3 {
   font-weight: 500;
 }
 
-.single-image {
+.image-card {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -43,6 +50,35 @@ h3 {
   border-bottom: 1px solid #ebeff2;
 }
 
-img {
-  width: 4.5rem;
+.image-card .image {
+  width: 4rem;
+  height: 3.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.image-card .info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-card .info h3 {
+  margin-bottom: 0.25rem;
+}
+
+.image-card .aside {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.image-card .size {
+  font-weight: 600;
+  border: 1px solid #e2e6ea;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.125rem;
+  text-align: center;
 }

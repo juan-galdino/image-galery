@@ -3,11 +3,11 @@
     <app-no-images-image></app-no-images-image>
     <article class="text">
       <h3>Você ainda não tem imagens salvas nesta galeria.</h3>
-    <p>
+      <p>
         Dê às suas imagens um lar digital seguro. Vá para a página de novo
         upload, adicione uma ou mais imagens e volte para gerenciar sua galeria
         neste espaço!
-    </p>
+      </p>
       <button
         (click)="headsToUploadImagesPage()"
         mat-raised-button
@@ -17,17 +17,35 @@
       </button>
     </article>
   </article>
-  </div>
-  <div *ngIf="isLoadding$ | async">Carregando imagens...</div>
+  <article *ngIf="isLoadding$ | async" class="loader">
+    <mat-spinner diameter="125"></mat-spinner>
+  </article>
   <ul>
-    <li class="single-image" *ngFor="let data of images; let i = index">
-      <div class="image">
-        <img [src]="data.url" alt="" />
-      </div>
+    <li class="image-card" *ngFor="let data of images; let i = index">
+      <div
+        class="image"
+        [ngStyle]="{ 'background-image': 'url(' + data.url + ')' }"
+      ></div>
       <div class="info">
-        <h4>{{ data.name }}</h4>
-        <p>{{ data.size }}</p>
-        <p>{{ data.timeCreated }}</p>
+        <article>
+          <h3>{{ data.name }}</h3>
+          <p>{{ data.timeCreated }}</p>
+        </article>
+        <article class="aside">
+          <p class="size">{{ data.size }}</p>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button
+              mat-menu-item
+              [ngStyle]="{ color: 'red' }"
+              (click)="openDialog(data.name)"
+            >
+              <mat-icon color="warn">delete_outline</mat-icon>Excluir
+            </button>
+          </mat-menu>
+        </article>
       </div>
     </li>
   </ul>
