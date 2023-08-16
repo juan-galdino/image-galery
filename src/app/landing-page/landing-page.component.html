@@ -1,0 +1,37 @@
+<header class="header">
+  <article class="header__logo">
+    <span></span>
+  </article>
+  <article class="header__buttons">
+    <button mat-button (click)="navigateToLogin()">Logar</button>
+    <button mat-raised-button color="primary" (click)="navigateToSignup()">
+      Criar conta
+    </button>
+  </article>
+</header>
+<div class="main-page">
+  <section class="hero">
+    <article class="hero__info">
+      <h1>Libere espaço e salve suas imagens numa galeria virtual gratuita.</h1>
+      <p>
+        O seu espaço pessoal mais seguro e protegido para suas imagens na
+        internet. Proteja suas memórias, gerencie e baixe as novamente a
+        qualquer momento e tenha muito mais espaço.
+      </p>
+      <button mat-raised-button color="primary" (click)="navigateToSignup()">
+        Criar conta grátis
+      </button>
+    </article>
+    <article class="hero__image">
+      <img src="../../assets/hero-image.jpg" alt="" />
+    </article>
+  </section>
+  <section class="how-it-works"></section>
+  <section class="app-screenshot"></section>
+  <section class="features"></section>
+  <section class="faq"></section>
+</div>
+<footer class="footer">
+  <span class="footer__logo"></span>
+  <p>© 2023 Sem nome. Todos os direitos reservados</p>
+</footer>
