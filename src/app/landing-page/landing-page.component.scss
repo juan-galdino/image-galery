@@ -1,9 +1,22 @@
 $header-height: 5.625rem;
 
+h1, h2 {
+  line-height: 2rem
+}
+
 button {
   border-radius: 50px;
   font-weight: 600;
   padding: 2rem 1rem;
+}
+
+section {
+  padding: 2rem 0;
+}
+
+.section-label {
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .header {
@@ -23,42 +36,47 @@ button {
 }
 
 .main-page {
-  padding-top: calc($header-height + 2rem);
-  padding-bottom: 2rem;
+  padding: calc($header-height) 1rem 0;
   line-height: 1.5rem;
   overflow: hidden;
+
+  @media screen and (min-width: 46.875em) { // 750px
+    padding-inline: 2rem;
+  }
+
+  @media screen and (min-width: 62.5em) { // 1000px
+    padding-inline: 4rem;
+  }
 }
 
 .hero {
   display: flex;
   flex-direction: column;
+  text-align: center;
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 46.875em) { // 750px
     flex-direction: row;
-    justify-content: space-between;
+    padding: 7rem 0;
   }
   
   &__info {
-    text-align: center;
-    line-height: 1.5rem;
     display: flex;
     flex-direction: column;
-    max-width: 700px;
     gap: 1rem;
     align-items: center;
-    padding-inline: 1rem;
     margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.5rem;
 
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 46.875em) {  // 750px
       text-align: left;
       align-items: flex-start;
-      padding-inline: 2rem;
       margin-bottom: 0;
+      gap: 2rem;
     }
 
     h1 {
       font-size: clamp(1.5rem, 2.5vw, 2rem); 
-      line-height: 2rem
     }
 
     button {
@@ -75,6 +93,39 @@ button {
   }
 }
 
+.how-it-works {
+  text-align: center;
+
+  h2 {
+    margin-bottom: 3rem;
+  }
+  
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media screen and (min-width: 43.75em) {  // 700px
+      flex-direction: row;
+    }
+  }
+  
+  .icon {
+    display: inline-block;
+    outline: 0.5rem solid #ebeff2;
+    padding: 0.75rem;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-color: #E5E5E5;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+
+}
 
 .footer {
   padding: 2rem;

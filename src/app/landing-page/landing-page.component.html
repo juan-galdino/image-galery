@@ -1,36 +1,80 @@
 <header class="header">
-  <article class="header__logo">
+  <div class="header__logo">
     <span></span>
-  </article>
-  <article class="header__buttons">
+  </div>
+  <div class="header__buttons">
     <button mat-button (click)="navigateToLogin()">Logar</button>
     <button mat-raised-button color="primary" (click)="navigateToSignup()">
       Criar conta
     </button>
-  </article>
+  </div>
 </header>
+
 <div class="main-page">
   <section class="hero">
     <article class="hero__info">
       <h1>Libere espaço e salve suas imagens numa galeria virtual gratuita.</h1>
       <p>
         O seu espaço pessoal mais seguro e protegido para suas imagens na
-        internet. Proteja suas memórias, gerencie e baixe as novamente a
-        qualquer momento e tenha muito mais espaço.
+        internet. Proteja suas memórias, gerencie-as a qualquer momento e tenha muito mais espaço local.
       </p>
       <button mat-raised-button color="primary" (click)="navigateToSignup()">
         Criar conta grátis
       </button>
     </article>
-    <article class="hero__image">
-      <img src="../../assets/hero-image.jpg" alt="" />
+    <div class="hero__image">
+      <img src="../../assets/hero-image.jpg" alt="Ilustração de um homem adulto em pé segurando um quadro de foto, fazendo o movimento de encaixar o quadro na tela de um site." />
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <span class="section-label">Como funciona</span>
+    <h2>Salve suas imagens no próprio espaço virtual</h2>
+
+    <article class="how-it-works__items">
+      <article class="how-it-works__item">
+        <span class="icon">
+          <mat-icon>login</mat-icon>
+        </span>
+        <h3>Crie sua conta gratuita</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+          dicta adipisci possimus fugit ad quo rerum corporis omnis beatae iusto
+          quasi obcaecati reprehenderit.
+        </p>
+      </article>
+      <article class="how-it-works__item">
+        <span class="icon">
+          <mat-icon>cloud_queue</mat-icon>
+        </span>
+        <h3>Faça uploads de novas imagens</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+          dicta adipisci possimus fugit ad quo rerum corporis omnis beatae iusto
+          quasi obcaecati reprehenderit.
+        </p>
+      </article>
+      <article class="how-it-works__item">
+        <span class="icon">
+          <mat-icon fontSet="material-icons-outlined">collections</mat-icon>
+        </span>
+        <h3>Acesse sua galeria</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+          dicta adipisci possimus fugit ad quo rerum corporis omnis beatae iusto
+          quasi obcaecati reprehenderit.
+        </p>
+      </article>
     </article>
   </section>
-  <section class="how-it-works"></section>
+
   <section class="app-screenshot"></section>
+
   <section class="features"></section>
+
   <section class="faq"></section>
 </div>
+
 <footer class="footer">
   <span class="footer__logo"></span>
   <p>© 2023 Sem nome. Todos os direitos reservados</p>
