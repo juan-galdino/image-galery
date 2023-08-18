@@ -5,7 +5,7 @@ import { LandingPageRoutingModule } from './landing-page-routing.module';
 import { LandingPageComponent } from './landing-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -16,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     LandingPageRoutingModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
   ]
 })
 export class LandingPageModule { }

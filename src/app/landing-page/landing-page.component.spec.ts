@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LandingPageComponent } from './landing-page.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -10,7 +12,11 @@ describe('LandingPageComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LandingPageComponent],
-      imports: [MatIconModule]
+      imports: [
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatExpansionModule
+      ]
     });
     fixture = TestBed.createComponent(LandingPageComponent);
     component = fixture.componentInstance;

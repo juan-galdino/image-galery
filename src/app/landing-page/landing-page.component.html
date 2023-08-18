@@ -12,20 +12,19 @@
 
 <div class="main-page">
   <section class="hero">
-    <article class="hero__info">
-      <h1>Libere espaço e salve suas imagens numa galeria virtual gratuita.</h1>
-      <p>
-        O seu espaço pessoal mais seguro e protegido para suas imagens na
+    <article class="hero__text">
+      <h1>Libere espaço e salve imagens na sua galeria online e gratuita.</h1>
+      <p>O seu espaço pessoal mais seguro e protegido para suas imagens na
         internet. Proteja suas memórias, gerencie-as a qualquer momento e tenha
-        muito mais espaço local.
-      </p>
-      <button mat-raised-button color="primary" (click)="navigateToSignup()">
-        Criar conta grátis
-      </button>
+        muito mais espaço local.</p>
+        <button mat-raised-button color="primary" (click)="navigateToSignup()">
+          Criar conta grátis
+        </button>
     </article>
+
     <div class="hero__image">
       <img
-        src="../../assets/hero-image.jpg"
+        src="../../assets/hero-image.png"
         alt="Ilustração de um homem adulto em pé segurando um quadro de foto, fazendo o movimento de encaixar o quadro na tela de um site."
       />
     </div>
@@ -93,20 +92,24 @@
         <span class="section-label">Lorem1</span>
         <article class="features__text">
           <h3>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit ut,
-            dolor corporis!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit
+            ut, dolor corporis!
           </h3>
           <p>
             Lorem ipsum dolor sit incidunt odit molestiae error voluptates odio
-            blanditiis doloremque libero aliquid, ratione temporibus nesciunt eos
-            eaque possimus! Debitis!
+            blanditiis doloremque libero aliquid, ratione temporibus nesciunt
+            eos eaque possimus! Debitis!
           </p>
           <ol>
             <li>Item</li>
             <li>Item</li>
             <li>Item</li>
           </ol>
-          <button mat-raised-button color="primary" (click)="navigateToSignup()">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="navigateToSignup()"
+          >
             Criar conta grátis
           </button>
         </article>
@@ -118,20 +121,24 @@
         <span class="section-label">Lorem2</span>
         <article class="features__text">
           <h3>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit ut,
-            dolor corporis!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit
+            ut, dolor corporis!
           </h3>
           <p>
             Lorem ipsum dolor sit incidunt odit molestiae error voluptates odio
-            blanditiis doloremque libero aliquid, ratione temporibus nesciunt eos
-            eaque possimus! Debitis!
+            blanditiis doloremque libero aliquid, ratione temporibus nesciunt
+            eos eaque possimus! Debitis!
           </p>
           <ol>
             <li>Item</li>
             <li>Item</li>
             <li>Item</li>
           </ol>
-          <button mat-raised-button color="primary" (click)="navigateToSignup()">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="navigateToSignup()"
+          >
             Criar conta grátis
           </button>
         </article>
@@ -143,20 +150,24 @@
         <span class="section-label">Lorem3</span>
         <article class="features__text">
           <h3>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit ut,
-            dolor corporis!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab fugit
+            ut, dolor corporis!
           </h3>
           <p>
             Lorem ipsum dolor sit incidunt odit molestiae error voluptates odio
-            blanditiis doloremque libero aliquid, ratione temporibus nesciunt eos
-            eaque possimus! Debitis!
+            blanditiis doloremque libero aliquid, ratione temporibus nesciunt
+            eos eaque possimus! Debitis!
           </p>
           <ol>
             <li>Item</li>
             <li>Item</li>
             <li>Item</li>
           </ol>
-          <button mat-raised-button color="primary" (click)="navigateToSignup()">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="navigateToSignup()"
+          >
             Criar conta grátis
           </button>
         </article>
@@ -164,7 +175,74 @@
     </article>
   </section>
 
-  <section class="faq"></section>
+  <section class="faq">
+    <div>
+      <span class="section-label">Suporte</span>
+      <article class="faq__text">
+        <h2>Dúvidas Frequentes</h2>
+        <p>
+          Para o que você precisar saber sobre a nossa solução. Ainda está com
+          dúvidas?
+        </p>
+        <button mat-stroked-button>Entrar em contato com o suporte</button>
+      </article>
+    </div>
+
+    <mat-accordion multi>
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit?</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis, mollitia
+          voluptates doloremque ullam maxime nam impedit. Nulla cupiditate tempore
+          nihil incidunt! Odio, voluptatum ipsum? Deserunt est perspiciatis
+          accusamus! Obcaecati, qui!
+        </p>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit?</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis, mollitia
+          voluptates doloremque ullam maxime nam impedit. Nulla cupiditate tempore
+          nihil incidunt! Odio, voluptatum ipsum? Deserunt est perspiciatis
+          accusamus! Obcaecati, qui!
+        </p>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit?</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis, mollitia
+          voluptates doloremque ullam maxime nam impedit. Nulla cupiditate tempore
+          nihil incidunt! Odio, voluptatum ipsum? Deserunt est perspiciatis
+          accusamus! Obcaecati, qui!
+        </p>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit?</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis, mollitia
+          voluptates doloremque ullam maxime nam impedit. Nulla cupiditate tempore
+          nihil incidunt! Odio, voluptatum ipsum? Deserunt est perspiciatis
+          accusamus! Obcaecati, qui!
+        </p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
 </div>
 
 <footer class="footer">
