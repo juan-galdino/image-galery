@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FirebaseStorageService } from '../../firebase-storage.service';
 import { ImageProps } from '../../shared/image-props.model';
 import { AuthenticationService } from 'src/app/auth/auth.service';
@@ -13,6 +14,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit, OnDestroy {
+  isMobile = false
   images: ImageProps[] = []
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
@@ -20,6 +22,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   imagesSubscription!: Subscription | null
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private authService: AuthenticationService,
     private firebaseStorageService: FirebaseStorageService,
     private router: Router,
@@ -27,6 +30,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe([Breakpoints.HandsetPortrait]).subscribe(result => {
+      this.isMobile = result.matches
+    })
+
     this.userSubscription = this.authService.user$.subscribe(user => {
       if(user) {
         this.fetchImages(user.uid)

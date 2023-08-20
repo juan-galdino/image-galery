@@ -71,11 +71,18 @@ export class FirebaseStorageService {
         return forkJoin(arrayOfObservables$).pipe(     // takes an array of observables and transforms into one
           map(arrayOfImagesWithMetadata => {    
             const allImages: ImageProps[] = arrayOfImagesWithMetadata.map(image => {
+              const name = image.metadata.name
+              const shortName = this.getShortName(name)
+              const size = this.formatImageSize(image.metadata.size)
+              const date = this.formatDate(image.metadata.timeCreated)
+              const url = image.url
+
               return new ImageProps(
-                image.metadata.name,
-                this.formatImageSize(image.metadata.size),
-                this.formatDate(image.metadata.timeCreated),
-                image.url
+                name,
+                shortName,
+                size,
+                date,
+                url
               )
             })
 
@@ -127,5 +134,9 @@ export class FirebaseStorageService {
       second:'numeric'
     }
     return date.toLocaleDateString('pt-BR', options);
+  }
+
+  getShortName(name: string): string {
+    return name.length > 8 ? name.substring(0, 10) + "..." : name
   }
 }

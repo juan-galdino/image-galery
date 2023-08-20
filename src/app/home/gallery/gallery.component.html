@@ -20,33 +20,36 @@
   <article *ngIf="isLoadding$ | async" class="loader">
     <mat-spinner diameter="125"></mat-spinner>
   </article>
-  <ul>
-    <li class="image-card" *ngFor="let data of images; let i = index">
-      <div
-        class="image"
-        [ngStyle]="{ 'background-image': 'url(' + data.url + ')' }"
-      ></div>
-      <div class="info">
-        <article>
-          <h3>{{ data.name }}</h3>
-          <p>{{ data.timeCreated }}</p>
-        </article>
-        <article class="aside">
-          <p class="size">{{ data.size }}</p>
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu>
-            <button
-              mat-menu-item
-              [ngStyle]="{ color: 'red' }"
-              (click)="openDialog(data.name)"
-            >
-              <mat-icon color="warn">delete_outline</mat-icon>Excluir
+  <article>
+    <ul>
+      <li class="image-card" *ngFor="let data of images; let i = index">
+        <div
+          class="image"
+          [ngStyle]="{ 'background-image': 'url(' + data.url + ')' }"
+        ></div>
+        <div class="info">
+          <article>
+            <h3 *ngIf="isMobile">{{ data.shortName }}</h3>
+            <h3 *ngIf="!isMobile">{{ data.name }}</h3>
+            <p>{{ data.timeCreated }}</p>
+          </article>
+          <article class="aside">
+            <p class="size">{{ data.size }}</p>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-          </mat-menu>
-        </article>
-      </div>
-    </li>
-  </ul>
+            <mat-menu #menu>
+              <button
+                mat-menu-item
+                [ngStyle]="{ color: 'red' }"
+                (click)="openDialog(data.name)"
+              >
+                <mat-icon color="warn">delete_outline</mat-icon>Excluir
+              </button>
+            </mat-menu>
+          </article>
+        </div>
+      </li>
+    </ul>
+  </article>
 </section>
