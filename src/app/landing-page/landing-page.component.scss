@@ -138,11 +138,8 @@ section {
     margin-bottom: 1.5rem;
   }
 
-  &__photo {
-    background-color: #E5E5E5;
-    border: 2px solid #c0bcbc;
-    border-radius: 25px;
-    height: 500px;
+  img {
+    width: 80vw;
   }
 }
 
@@ -171,13 +168,24 @@ section {
   }
 
   &__image {
-    height: 400px;
-    background-color: #e6e6e6;
-    border: 2px solid #c0bcbc;
-    border-radius: 25px;
+    text-align: center;
+  
+    img {
+      width: 95vw;
+  
+      @media screen and (min-width: 47.9375em) { // 767px
+        width: 45vw;
+      }
+    }
 
-    @media screen and (min-width: 47.9375em) { // 767px
-      width: 90vw;
+    img.drop-shadow {
+      box-shadow: 7px 1px 21px 1px rgba(66, 65, 65, 0.55);
+      width: 70vw;
+
+      @media screen and (min-width: 47.9375em) { // 767px
+        width: 40vw;
+        margin-left: 1rem;
+      }
     }
   }
   
