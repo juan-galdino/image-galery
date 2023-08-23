@@ -82,10 +82,10 @@ section {
     text-align: center;
 
     img {
-      width: 300px;
-      
-      @media screen and (min-width: 47.9375em) {  // 767px
-        width: 400px;  
+      width: 95vw;
+
+      @media screen and (min-width: 47.9375em) { // 767px
+        width: 45vw;
       }
     }
 
