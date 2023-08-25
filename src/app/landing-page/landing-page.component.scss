@@ -1,21 +1,21 @@
-$header-height: 5.625rem;
+h1 {
+  font-size: clamp(2.15rem, 5vw, 3rem); 
+  line-height: clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 31.25rem;
+}
 
-h1, h2 {
+h2 {
   line-height: 2rem
 }
 
 button {
   border-radius: 50px;
   font-weight: 600;
-  padding: 2rem 1rem;
+  padding: 1.5rem;
 
   @media screen and (min-width: 47.9375em) { // 767px
     width: fit-content;
   }
-}
-
-section {
-  padding: 2rem 0;
 }
 
 .section-label {
@@ -25,6 +25,7 @@ section {
 
 .header {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 5;
   display: flex;
@@ -40,7 +41,8 @@ section {
 }
 
 .main-page {
-  padding: calc($header-height) 1rem 0;
+  margin-top: 4.5625rem;
+  padding-inline: 1rem;
   line-height: 1.5rem;
   overflow: hidden;
 
@@ -58,24 +60,33 @@ section {
   flex-direction: column;
   text-align: center;
   gap: 2rem;
+  align-items: center;
+  padding: 4rem 0;
 
   @media screen and (min-width: 47.9375em) { // 767px
     flex-direction: row;
-    padding: 6rem 0;
+    padding-bottom: 6rem;
   }
   
   &__text {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    align-items: center;
+    
+
+    p {
+      line-height: 2rem;
+    }
 
     @media screen and (min-width: 47.9375em) { // 767px
+      align-items: start;
       text-align: start;
-    }
-  }
 
-  h1 {
-    font-size: clamp(1.5rem, 2.5vw, 2rem); 
+      p {
+        font-size: 1.10rem;
+      }
+    }
   }
 
   &__image {
@@ -93,8 +104,13 @@ section {
 }
 
 .how-it-works {
+  border-top: 1px solid #ebeff2;
   text-align: center;
-  padding-bottom: 6rem;
+  padding: 4rem 0;
+
+  @media screen and (min-width: 47.9375em) {  // 767px
+    padding: 6rem 0;
+  }
 
   h2 {
     margin-bottom: 3rem;
@@ -131,12 +147,22 @@ section {
 .app-screenshot {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
   text-align: center;
-  padding-bottom: 6rem;
+  border-top: 1px solid #ebeff2;
+  padding: 4rem 0;
+
+  @media screen and (min-width: 47.9375em) {  // 767px
+    padding: 6rem 0;
+  }
 
   h2 {
     margin-bottom: 1.5rem;
+  }
+
+  p {
+    max-width: 50rem;
   }
 
   img {
@@ -148,12 +174,25 @@ section {
   display: flex;
   flex-direction: column;
   gap: 6rem;
-  padding-bottom: 7rem;
+  padding: 4rem 0;
+  border-top: 1px solid #ebeff2;
+
+  @media screen and (min-width: 47.9375em) {  // 767px
+    padding: 6rem 0;
+  }
 
   &__section, &__section--reverse {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid #ebeff2;
+    align-items: center;
+
+    @media screen and (min-width: 47.9375em) {  // 767px
+      padding: 3rem 0;
+    }
+
   }
 
   @media screen and (min-width: 47.9375em) { // 767px
@@ -166,6 +205,11 @@ section {
       flex-direction: row-reverse;
     }
     
+  }
+
+  &__section--reverse:first-child {
+    padding: 0;
+    border: none;
   }
 
   &__image {
@@ -197,13 +241,15 @@ section {
 .faq {
   display: grid;
   gap: 5rem;
-  padding-bottom: 6rem;
-  
-  @media screen and (min-width: 47.9375em) { // 767px
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem
-  }
+  border-top: 1px solid #ebeff2;
+  padding: 4rem 0;
 
+  @media screen and (min-width: 47.9375em) {  // 767px
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 6rem 0;
+  }
+  
   &__text {
     display: flex;
     flex-direction: column;
@@ -226,7 +272,6 @@ section {
     padding-left: 0;
   }
 
-  
 }
 
 .footer {
