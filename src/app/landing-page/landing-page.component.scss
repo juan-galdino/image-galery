@@ -186,7 +186,6 @@ button {
     flex-direction: column;
     gap: 3rem;
     padding: 2rem 0;
-    border-top: 1px solid #ebeff2;
     align-items: center;
 
     @media screen and (min-width: 47.9375em) {  // 767px
@@ -205,11 +204,6 @@ button {
       flex-direction: row-reverse;
     }
     
-  }
-
-  &__section--reverse:first-child {
-    padding: 0;
-    border: none;
   }
 
   &__image {
