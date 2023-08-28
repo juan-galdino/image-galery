@@ -8,6 +8,10 @@ h2 {
   line-height: 2rem
 }
 
+li[section-link] {
+  color: blue;
+}
+
 button {
   border-radius: 50px;
   font-weight: 600;
@@ -23,20 +27,54 @@ button {
   margin-bottom: 1rem;
 }
 
-.header {
+header {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 5;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem 1rem;
   background-color: white;
-  border-bottom: 1px solid #ebeff2;
 
-  &__buttons {
+  .nav {
     display: flex;
-    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    border-bottom: 1px solid #ebeff2;
+    
+    button[mat-icon-button] {
+      @media screen and (min-width: 47.9375em) {  // 767px
+        display: none;
+      }
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      padding-inline: 2rem;
+    }
+
+    a {
+      cursor: pointer;
+    }
+
+    
+
+    &__links-list {
+      display: none;
+      @media screen and (min-width: 47.9375em) {  // 767px
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+    }
+
+    &__buttons {
+      display: none;
+      @media screen and (min-width: 47.9375em) {  // 767px
+        display: flex;
+        gap: 0.5rem;
+      } 
+    }
+
   }
 }
 

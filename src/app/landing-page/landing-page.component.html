@@ -1,17 +1,42 @@
-<header class="header">
-  <div class="header__logo">
-    <span></span>
-  </div>
-  <div class="header__buttons">
-    <button mat-button (click)="navigateToLogin()">Logar</button>
-    <button mat-raised-button color="primary" (click)="navigateToSignup()">
-      Criar conta
-    </button>
-  </div>
+<header>
+  <nav class="nav">
+    <div class="nav__links">
+      <div></div>
+      <ul class="nav__links-list">
+        <li><a (click)="scrollToSection('hero')">Início</a></li>
+        <li><a (click)="scrollToSection('how-it-works')">Como funciona?</a></li>
+        <li><a (click)="scrollToSection('features')">Funcionalidades</a></li>
+        <li><a (click)="scrollToSection('faq')">Suporte</a></li>
+      </ul>
+    </div>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <mat-menu #menu>
+        <ul class="nav__links">
+          <li mat-menu-item section-link><a (click)="scrollToSection('hero')">Início</a></li>
+          <li mat-menu-item section-link><a (click)="scrollToSection('how-it-works')">Como funciona?</a></li>
+          <li mat-menu-item section-link><a (click)="scrollToSection('features')">Funcionalidades</a></li>
+          <li mat-menu-item section-link><a (click)="scrollToSection('faq')">Suporte</a></li>
+          <li mat-menu-item><a (click)="navigateToLogin()">Logar</a></li>
+          <li mat-menu-item><a (click)="navigateToSignup()">Criar conta</a></li>
+        </ul>
+      </mat-menu>
+  
+      <div class="nav__buttons">
+        <button mat-button (click)="navigateToLogin()">Logar</button>
+        <button mat-raised-button color="primary" (click)="navigateToSignup()">
+          Criar conta
+        </button>
+      </div>
+
+  </nav>
 </header>
 
 <div class="main-page">
-  <section class="hero">
+  <section class="hero" id="hero">
     <article class="hero__text">
       <h1>Você gostaria de ter mais espaço para suas fotos?</h1>
       <p>
@@ -32,7 +57,7 @@
     </div>
   </section>
 
-  <section class="how-it-works">
+  <section class="how-it-works" id="how-it-works">
     <span class="section-label">Como funciona</span>
     <h2>Salve suas imagens no próprio espaço virtual</h2>
 
@@ -94,7 +119,7 @@
     </article>
   </section>
 
-  <section class="features">
+  <section class="features" id="features">
     <article class="features__section--reverse">
       <div class="features__image">
         <img
@@ -183,7 +208,7 @@
     </article>
   </section>
 
-  <section class="faq">
+  <section class="faq" id="faq">
     <div>
       <span class="section-label">Suporte</span>
       <article class="faq__text">
@@ -192,7 +217,7 @@
           Para o que você precisar saber sobre a nossa solução. Ainda está com
           dúvidas?
         </p>
-        <button mat-stroked-button>Entrar em contato com o suporte</button>
+        <button mat-stroked-button>Falar com o suporte</button>
       </article>
     </div>
 
