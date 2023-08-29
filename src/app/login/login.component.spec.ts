@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatIconModule } from '@angular/material/icon';
 
 import { Subject } from 'rxjs';
 
@@ -34,6 +35,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         BrowserAnimationsModule,
 
+        MatIconModule,
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,

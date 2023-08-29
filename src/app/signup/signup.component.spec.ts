@@ -12,6 +12,8 @@ import { AuthenticationService } from '../auth/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlankComponent } from '../mocks/blank/blank.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -31,6 +33,7 @@ describe('SignupComponent', () => {
         ReactiveFormsModule,
         BrowserAnimationsModule,
 
+        MatIconModule,
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,

@@ -64,5 +64,9 @@ export class LoginComponent implements OnInit {
   goToSignupPage() {
     this.router.navigate(['/cadastro'])
   }
+
+  goToHomePage() {
+    this.router.navigate([''])
+  }
   
 }

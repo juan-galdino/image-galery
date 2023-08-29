@@ -6,6 +6,12 @@ section {
   height: 100vh;
 }
 
+.back-to-home a {
+  border-radius: 0;
+  border-bottom: 1px solid black;
+  margin-bottom: 1rem;
+}
+
 form {
   display: flex;
   flex-direction: column;

@@ -1,5 +1,9 @@
 <section>
   <form [formGroup]="form">
+    <div class="back-to-home">
+      <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
+    </div>
+    
     <h1>Entre com sua conta</h1>
     <mat-form-field class="no-padding-on-errors-globally">
       <mat-label>Email</mat-label>
