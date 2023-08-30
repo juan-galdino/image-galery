@@ -124,16 +124,12 @@ export class FirebaseStorageService {
   }
 
   formatDate(timeCreated: string): string {
-    const date = new Date(timeCreated)
-    const options: Intl.DateTimeFormatOptions = { 
-      day: 'numeric', 
-      month: 'long', 
-      year: 'numeric',
-      hour:'numeric' ,
-      minute:'numeric',
-      second:'numeric'
-    }
-    return date.toLocaleDateString('pt-BR', options);
+    const now = new Date()
+    const lastUpload = new Date(timeCreated)
+    const timeDifference = lastUpload.getTime() - now.getTime()
+    const rtf = new Intl.RelativeTimeFormat('pt', { numeric: 'auto' })
+
+    return rtf.format(Math.round(timeDifference / (1000 * 60 * 60 * 24)), "day")
   }
 
   getShortName(name: string): string {
