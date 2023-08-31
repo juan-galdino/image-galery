@@ -76,9 +76,16 @@ h3 {
 }
 
 .image-card .size {
-  font-weight: 600;
-  border: 1px solid #e2e6ea;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.125rem;
-  text-align: center;
+  display: none;
+}
+
+@media screen and (min-width: 25em) { /* same as 400px divided by 16 */
+  .image-card .size {
+    display: block;
+    font-weight: 600;
+    border: 1px solid #e2e6ea;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.125rem;
+    text-align: center;
+  }
 }

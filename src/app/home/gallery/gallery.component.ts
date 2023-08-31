@@ -14,7 +14,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit, OnDestroy {
-  isMobile = false
+  isMediumScreen = false
   images: ImageProps[] = []
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
@@ -30,8 +30,14 @@ export class GalleryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.breakpointObserver.observe([Breakpoints.HandsetPortrait]).subscribe(result => {
-      this.isMobile = result.matches
+    const customWidth = '(min-width: 37.5em)'
+    this.breakpointObserver.observe([customWidth]).subscribe( ()=> {
+      this.isMediumScreen = false
+
+      if ( this.breakpointObserver.isMatched(customWidth) ) { 
+        this.isMediumScreen = true
+      } 
+      
     })
 
     this.userSubscription = this.authService.user$.subscribe(user => {
@@ -39,6 +45,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.fetchImages(user.uid)
       }
     })
+    
     this.isLoadding$ = this.firebaseStorageService.isLoadding$
     this.isImagesArrayEmpty$ = this.firebaseStorageService.isImagesArrayEmpty$
   }
@@ -69,6 +76,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
         console.log(result)
       }
     })
+  }
+
+  getShortName(imageName: string): string {
+    return imageName.length > 8 ? imageName.substring(0, 10) + "..." : imageName
   }
 
   ngOnDestroy(): void {

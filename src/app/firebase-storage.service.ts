@@ -71,15 +71,13 @@ export class FirebaseStorageService {
         return forkJoin(arrayOfObservables$).pipe(     // takes an array of observables and transforms into one
           map(arrayOfImagesWithMetadata => {    
             const allImages: ImageProps[] = arrayOfImagesWithMetadata.map(image => {
-              const name = image.metadata.name
-              const shortName = this.getShortName(name)
+              const fullName = image.metadata.name
               const size = this.formatImageSize(image.metadata.size)
               const date = this.formatDate(image.metadata.timeCreated)
               const url = image.url
 
               return new ImageProps(
-                name,
-                shortName,
+                fullName,
                 size,
                 date,
                 url
@@ -132,7 +130,4 @@ export class FirebaseStorageService {
     return rtf.format(Math.round(timeDifference / (1000 * 60 * 60 * 24)), "day")
   }
 
-  getShortName(name: string): string {
-    return name.length > 8 ? name.substring(0, 10) + "..." : name
-  }
 }

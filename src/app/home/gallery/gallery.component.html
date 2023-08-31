@@ -22,19 +22,19 @@
   </article>
   <article>
     <ul>
-      <li class="image-card" *ngFor="let data of images; let i = index">
+      <li class="image-card" *ngFor="let image of images; let i = index">
         <div
           class="image"
-          [ngStyle]="{ 'background-image': 'url(' + data.url + ')' }"
+          [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
         ></div>
         <div class="info">
           <article>
-            <h3 *ngIf="isMobile">{{ data.shortName }}</h3>
-            <h3 *ngIf="!isMobile">{{ data.name }}</h3>
-            <p>{{ data.timeCreated }}</p>
+            <h3 *ngIf="!isMediumScreen">{{ getShortName(image.fullName) }}</h3>
+            <h3 *ngIf="isMediumScreen">{{ image.fullName }}</h3>
+            <p>{{ image.timeCreated }}</p>
           </article>
           <article class="aside">
-            <p class="size">{{ data.size }}</p>
+            <p class="size">{{ image.size }}</p>
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -42,7 +42,7 @@
               <button
                 mat-menu-item
                 [ngStyle]="{ color: 'red' }"
-                (click)="openDialog(data.name)"
+                (click)="openDialog(image.fullName)"
               >
                 <mat-icon color="warn">delete_outline</mat-icon>Excluir
               </button>
