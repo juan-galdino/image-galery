@@ -1,69 +1,71 @@
 <section>
-  <form [formGroup]="form">
-    <div class="back-to-home">
-      <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
-    </div>
-    
-    <h1>Crie sua nova conta</h1>
-    <mat-form-field class="no-padding-on-errors-globally">
-      <mat-label>Nome</mat-label>
-      <input
-        type="text"
-        matInput
-        placeholder="Ex: Atlas"
-        formControlName="name"
-      />
-      <mat-error> Digite algum nome. </mat-error>
-    </mat-form-field>
-    <mat-form-field class="no-padding-on-errors-globally">
-      <mat-label>Email</mat-label>
-      <input
-        type="email"
-        matInput
-        placeholder="Ex: pat@example.com"
-        formControlName="email"
-      />
-      <mat-error *ngIf="form.get('email')!.hasError('required')">
-        Digite algum email.
-      </mat-error>
-      <mat-error *ngIf="form.get('email')!.hasError('email')">
-        Digite um email válido.
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="no-padding-on-errors-globally">
-      <mat-label>Senha</mat-label>
-      <input
-        type="password"
-        matInput
-        placeholder="Senha"
-        formControlName="password"
-      />
-      <mat-error> Digite alguma senha. </mat-error>
-    </mat-form-field>
-    <button
-      *ngIf="!isUserBeingCreated"
-      mat-raised-button
-      color="primary"
-      test-id="signup-button"
-      [disabled]="!form.valid"
-      (click)="onSignup()"
-    >
-      Cadastrar
-    </button>
-    <button
-      *ngIf="isUserBeingCreated"
-      mat-raised-button
-      color="primary"
-      test-id="signup-loader"
-    >
-      <mat-spinner color="accent" diameter="25"></mat-spinner>
-    </button>
-    <button
-      mat-stroked-button
-      (click)="goToLoginPage()"
-      test-id="heads-to-login-page-button"
-    >
-      Ir para página de login
-    </button>
-  </form>
+  <div class="container">
+    <form [formGroup]="form">
+      <div class="back-to-home">
+        <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
+      </div>
+      
+      <h1>Crie sua nova conta</h1>
+      <mat-form-field class="no-padding-on-errors-globally">
+        <mat-label>Nome</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ex: Atlas"
+          formControlName="name"
+        />
+        <mat-error> Digite algum nome. </mat-error>
+      </mat-form-field>
+      <mat-form-field class="no-padding-on-errors-globally">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Ex: pat@example.com"
+          formControlName="email"
+        />
+        <mat-error *ngIf="form.get('email')!.hasError('required')">
+          Digite algum email.
+        </mat-error>
+        <mat-error *ngIf="form.get('email')!.hasError('email')">
+          Digite um email válido.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="no-padding-on-errors-globally">
+        <mat-label>Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Senha"
+          formControlName="password"
+        />
+        <mat-error> Digite alguma senha. </mat-error>
+      </mat-form-field>
+      <button
+        *ngIf="!isUserBeingCreated"
+        mat-raised-button
+        color="primary"
+        test-id="signup-button"
+        [disabled]="!form.valid"
+        (click)="onSignup()"
+      >
+        Cadastrar
+      </button>
+      <button
+        *ngIf="isUserBeingCreated"
+        mat-raised-button
+        color="primary"
+        test-id="signup-loader"
+      >
+        <mat-spinner color="accent" diameter="25"></mat-spinner>
+      </button>
+      <button
+        mat-stroked-button
+        (click)="goToLoginPage()"
+        test-id="heads-to-login-page-button"
+      >
+        Já tenho conta
+      </button>
+    </form>
+  </div>
 </section>

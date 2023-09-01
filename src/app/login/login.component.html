@@ -1,79 +1,81 @@
 <section>
-  <form [formGroup]="form">
-    <div class="back-to-home">
-      <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
-    </div>
-    
-    <h1>Entre com sua conta</h1>
-    <mat-form-field class="no-padding-on-errors-globally">
-      <mat-label>Email</mat-label>
-      <input
-        type="email"
-        matInput
-        placeholder="Ex: pat@example.com"
-        formControlName="email"
-      />
-      <mat-error *ngIf="form.get('email')!.hasError('required')">
-        Digite algum email.
-      </mat-error>
-      <mat-error *ngIf="form.get('email')!.hasError('email')">
-        Digite um email válido.
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="no-padding-on-errors-globally">
-      <mat-label>Senha</mat-label>
-      <input
-        type="password"
-        matInput
-        placeholder="Senha"
-        formControlName="password"
-      />
-      <mat-error *ngIf="form.get('password')!.hasError('required')">
-        Digite alguma senha.
-      </mat-error>
-    </mat-form-field>
-    <div class="aligned-to-right">
+  <div class="container">
+    <form [formGroup]="form">
+      <div class="back-to-home">
+        <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
+      </div>
+      
+      <h1>Entre com sua conta</h1>
+      <mat-form-field class="no-padding-on-errors-globally">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          placeholder="Ex: pat@example.com"
+          formControlName="email"
+        />
+        <mat-error *ngIf="form.get('email')!.hasError('required')">
+          Digite algum email.
+        </mat-error>
+        <mat-error *ngIf="form.get('email')!.hasError('email')">
+          Digite um email válido.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="no-padding-on-errors-globally">
+        <mat-label>Senha</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Senha"
+          formControlName="password"
+        />
+        <mat-error *ngIf="form.get('password')!.hasError('required')">
+          Digite alguma senha.
+        </mat-error>
+      </mat-form-field>
+      <div class="aligned-to-right">
+        <button
+          *ngIf="!isRecoveringPassword"
+          (click)="recoverPassword()"
+          mat-button
+          test-id="forgot-password-button"
+          [disabled]="!form.get('email')!.valid"
+        >
+          Esqueci minha senha
+        </button>
+        <button
+          *ngIf="isRecoveringPassword"
+          mat-button
+          test-id="forgot-password-loader"
+        >
+          <mat-spinner color="primary" diameter="25"></mat-spinner>
+        </button>
+      </div>
       <button
-        *ngIf="!isRecoveringPassword"
-        (click)="recoverPassword()"
-        mat-button
-        test-id="forgot-password-button"
-        [disabled]="!form.get('email')!.valid"
+        mat-raised-button
+        color="primary"
+        test-id="login-button"
+        [disabled]="!form.valid"
+        (click)="onLogin()"
+        *ngIf="!isLoggingIn"
       >
-        Esqueci minha senha
+        Login
       </button>
       <button
-        *ngIf="isRecoveringPassword"
-        mat-button
-        test-id="forgot-password-loader"
+        mat-raised-button
+        color="primary"
+        test-id="login-loader"
+        *ngIf="isLoggingIn"
       >
-        <mat-spinner color="primary" diameter="25"></mat-spinner>
+        <mat-spinner color="accent" diameter="25"></mat-spinner>
       </button>
-    </div>
-    <button
-      mat-raised-button
-      color="primary"
-      test-id="login-button"
-      [disabled]="!form.valid"
-      (click)="onLogin()"
-      *ngIf="!isLoggingIn"
-    >
-      Login
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      test-id="login-loader"
-      *ngIf="isLoggingIn"
-    >
-      <mat-spinner color="accent" diameter="25"></mat-spinner>
-    </button>
-    <button
-      mat-stroked-button
-      test-id="heads-to-signup-page-button"
-      (click)="goToSignupPage()"
-    >
-      Cadastrar
-    </button>
-  </form>
+      <button
+        mat-stroked-button
+        test-id="heads-to-signup-page-button"
+        (click)="goToSignupPage()"
+      >
+        Criar conta
+      </button>
+    </form>
+  </div>
 </section>

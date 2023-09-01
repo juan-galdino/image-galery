@@ -25,6 +25,7 @@ $my-theme: mat.define-light-theme((
 html {
   font-family: sans-serif;
   scroll-behavior: smooth;
+  overflow-x: hidden
 }
 
 li {
