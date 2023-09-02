@@ -122,12 +122,23 @@ export class FirebaseStorageService {
   }
 
   formatDate(timeCreated: string): string {
-    const now = new Date()
-    const lastUpload = new Date(timeCreated)
-    const timeDifference = lastUpload.getTime() - now.getTime()
-    const rtf = new Intl.RelativeTimeFormat('pt', { numeric: 'auto' })
+    const timeMs = new Date(timeCreated).getTime() 
 
-    return rtf.format(Math.round(timeDifference / (1000 * 60 * 60 * 24)), "day")
+    const lastUploadInSecs = Math.round((timeMs - Date.now()) / 1000)
+
+    // Array representing one minute, hour, day, week, month, etc in seconds
+    const cutoffs = [60, 3600, 86400, 86400 * 7, 86400 * 30, 86400 * 365, Infinity]
+
+    // Array is same as above but in string representation of the units.
+    const units: Intl.RelativeTimeFormatUnit[] = ["second", "minute", "hour", "day", "week", "month", "year"]
+  
+    const unitIndex = cutoffs.findIndex(cutoff => cutoff > Math.abs(lastUploadInSecs))
+
+    // Get divisor to divide from the seconds. E.g if unit is "day", the divisor will be one day in seconds.
+    const divisor = unitIndex ? cutoffs[unitIndex - 1] : 1;
+
+    const rtf = new Intl.RelativeTimeFormat('pt', { numeric: 'auto' })
+    return rtf.format(Math.floor(lastUploadInSecs / divisor ), units[unitIndex])
   }
 
 }
