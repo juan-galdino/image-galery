@@ -73,7 +73,7 @@ export class FirebaseStorageService {
             const allImages: ImageProps[] = arrayOfImagesWithMetadata.map(image => {
               const fullName = image.metadata.name
               const size = this.formatImageSize(image.metadata.size)
-              const date = this.formatDate(image.metadata.timeCreated)
+              const date = image.metadata.timeCreated
               const url = image.url
 
               return new ImageProps(
@@ -87,7 +87,7 @@ export class FirebaseStorageService {
             this.hasNewImage = false
             this._isLoaddingSub.next(false)
             this.isListResultEmpty = false
-            this.images = allImages
+            this.images = this.sortByLatest(allImages)
             return this.images
           })      
         )
@@ -121,24 +121,15 @@ export class FirebaseStorageService {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  formatDate(timeCreated: string): string {
-    const timeMs = new Date(timeCreated).getTime() 
+  sortByLatest( images: ImageProps[] ): ImageProps[] {
+    const sortedImages = images.sort((a: ImageProps, b: ImageProps) => {
+      const timeA = new Date(a.timeCreated).getTime()
+      const timeB = new Date(b.timeCreated).getTime()
 
-    const lastUploadInSecs = Math.round((timeMs - Date.now()) / 1000)
+      return timeB - timeA
+    })
 
-    // Array representing one minute, hour, day, week, month, etc in seconds
-    const cutoffs = [60, 3600, 86400, 86400 * 7, 86400 * 30, 86400 * 365, Infinity]
-
-    // Array is same as above but in string representation of the units.
-    const units: Intl.RelativeTimeFormatUnit[] = ["second", "minute", "hour", "day", "week", "month", "year"]
-  
-    const unitIndex = cutoffs.findIndex(cutoff => cutoff > Math.abs(lastUploadInSecs))
-
-    // Get divisor to divide from the seconds. E.g if unit is "day", the divisor will be one day in seconds.
-    const divisor = unitIndex ? cutoffs[unitIndex - 1] : 1;
-
-    const rtf = new Intl.RelativeTimeFormat('pt', { numeric: 'auto' })
-    return rtf.format(Math.floor(lastUploadInSecs / divisor ), units[unitIndex])
+    return sortedImages
   }
 
 }
