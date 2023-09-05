@@ -7,6 +7,7 @@ import { Observable, Subscription, catchError } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
+import firebase from 'firebase/compat';
 
 @Component({
   selector: 'app-gallery',
@@ -15,6 +16,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   isMediumScreen = false
+  user!: firebase.User | null
   images: ImageProps[] = []
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
@@ -42,6 +44,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
     this.userSubscription = this.authService.user$.subscribe(user => {
       if(user) {
+        this.user = user
         this.fetchImages(user.uid)
       }
     })
@@ -62,18 +65,22 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.router.navigate(['home/upload'])
   }
 
-  openDialog(imageName: string) {
+  openDialog(imageName: string, imageIndex: number) {
     const dialogRef = this.dialog.open(DialogContentComponent, {
-      data: { name: imageName }
+      data: { name: imageName, uid: this.user?.uid }
     })
 
     dialogRef.afterClosed().pipe(
       catchError(err => {
         throw err
       })
-    ).subscribe(result => {
-      if(result) {
-        console.log(result)
+    ).subscribe(() => {
+
+      this.firebaseStorageService.images.splice(imageIndex, 1)
+
+      if(this.firebaseStorageService.images.length === 0) {
+        this.firebaseStorageService.isListResultEmpty = true
+        this.firebaseStorageService.isImagesArrayEmpty.next(true)
       }
     })
   }

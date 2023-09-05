@@ -22,7 +22,10 @@
   </article>
   <article>
     <ul>
-      <li class="image-card" *ngFor="let image of images; let i = index">
+      <li
+        class="image-card"
+        *ngFor="let image of images; let imageIndex = index"
+      >
         <div
           class="image"
           [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
@@ -42,7 +45,7 @@
               <button
                 mat-menu-item
                 [ngStyle]="{ color: 'red' }"
-                (click)="openDialog(image.fullName)"
+                (click)="openDialog(image.fullName, imageIndex)"
               >
                 <mat-icon color="warn">delete_outline</mat-icon>Excluir
               </button>

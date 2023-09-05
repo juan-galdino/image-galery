@@ -100,6 +100,11 @@ export class FirebaseStorageService {
     )
   }
 
+  removeFile(path: string): Observable<any> {
+    const fileRef = this.storage.ref(path)
+    return fileRef.delete()
+  }
+
   get isImagesArrayEmpty$() {
     return this.isImagesArrayEmpty.asObservable()
   }
