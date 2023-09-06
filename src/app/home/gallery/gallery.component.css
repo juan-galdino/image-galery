@@ -51,6 +51,7 @@ h3 {
 }
 
 .image-card .image {
+  cursor: pointer;
   width: 4rem;
   height: 3.5rem;
   background-repeat: no-repeat;
@@ -79,7 +80,8 @@ h3 {
   display: none;
 }
 
-@media screen and (min-width: 25em) { /* same as 400px divided by 16 */
+@media screen and (min-width: 25em) {
+  /* same as 400px divided by 16 */
   .image-card .size {
     display: block;
     font-weight: 600;

@@ -27,9 +27,11 @@
         *ngFor="let image of images; let imageIndex = index"
       >
         <div
+          (click)="showImageInFullScreen(imageIndex)"
           class="image"
           [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
         ></div>
+
         <div class="info">
           <article>
             <h3 *ngIf="!isMediumScreen">{{ getShortName(image.fullName) }}</h3>
@@ -42,6 +44,9 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu>
+              <button mat-menu-item (click)="showImageInFullScreen(imageIndex)">
+                <mat-icon>fullscreen</mat-icon>Mostrar imagem
+              </button>
               <button
                 mat-menu-item
                 [ngStyle]="{ color: 'red' }"
@@ -55,4 +60,10 @@
       </li>
     </ul>
   </article>
+  <app-full-screen-image
+    *ngIf="isFullScreenMode"
+    [currentImage]="imageUrl"
+    [images]="images"
+    (close)="closeFullScreenMode()"
+  ></app-full-screen-image>
 </section>

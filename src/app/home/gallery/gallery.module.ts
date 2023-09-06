@@ -10,8 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
-
-
+import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-image/full-screen-image.component';
 
 
 @NgModule({
@@ -19,6 +18,7 @@ import { DialogContentComponent } from './dialog-content/dialog-content.componen
     GalleryComponent,
     NoImagesImageComponent,
     DialogContentComponent,
+    FullScreenImageComponent
   ],
   imports: [
     CommonModule,

@@ -20,6 +20,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   images: ImageProps[] = []
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
+  isFullScreenMode = false
+  imageUrl!: string
   userSubscription!: Subscription | null
   imagesSubscription!: Subscription | null
 
@@ -109,6 +111,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
     const rtf = new Intl.RelativeTimeFormat('pt', { numeric: 'auto' })
     return rtf.format(Math.floor(lastUploadInSecs / divisor ), units[unitIndex])
+  }
+
+  showImageInFullScreen(imageIndex: number) {
+    this.isFullScreenMode = true
+    this.imageUrl = this.images[imageIndex].url
+  }
+
+  closeFullScreenMode() {
+    this.imageUrl = ""
+    this.isFullScreenMode = false
   }
 
   ngOnDestroy(): void {
