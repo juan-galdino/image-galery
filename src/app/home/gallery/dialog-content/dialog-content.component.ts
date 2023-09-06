@@ -1,6 +1,6 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription, catchError } from 'rxjs';
+import { Subscription, catchError, take } from 'rxjs';
 import { FirebaseStorageService } from 'src/app/firebase-storage.service';
 
 @Component({
@@ -9,26 +9,23 @@ import { FirebaseStorageService } from 'src/app/firebase-storage.service';
   styleUrls: ['./dialog-content.component.css']
 })
 
-export class DialogContentComponent implements OnDestroy {
+export class DialogContentComponent {
   subscription!: Subscription
   
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { name: string, uid: string }, 
+    @Inject(MAT_DIALOG_DATA) public userData: { userFileName: string, uid: string }, 
     private firebaseStorageService: FirebaseStorageService 
     ) {}
 
   delete() {
-    const filePath = 'users/'+ this.data.uid +'/uploads/' + this.data.name
-    this.subscription = this.firebaseStorageService.removeFile(filePath)
+    const userFilePath = 'users/'+ this.userData.uid +'/uploads/' + this.userData.userFileName
+    this.firebaseStorageService.removeFile(userFilePath)
     .pipe(
+      take(1),
       catchError(err => {
         throw err
       })
     )
     .subscribe()
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
   }
 }

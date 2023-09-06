@@ -67,16 +67,18 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   openDialog(imageName: string, imageIndex: number) {
     const dialogRef = this.dialog.open(DialogContentComponent, {
-      data: { name: imageName, uid: this.user?.uid }
+      data: { userFileName: imageName, uid: this.user?.uid }
     })
 
     dialogRef.afterClosed().pipe(
       catchError(err => {
         throw err
       })
-    ).subscribe(() => {
+    ).subscribe(result => {
 
-      this.firebaseStorageService.images.splice(imageIndex, 1)
+      if(result === "from delete button") {
+        this.firebaseStorageService.images.splice(imageIndex, 1)
+      }
 
       if(this.firebaseStorageService.images.length === 0) {
         this.firebaseStorageService.isListResultEmpty = true

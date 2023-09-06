@@ -2,14 +2,14 @@
 <mat-dialog-content>
   <p>
     Você tem certeza que gostaria de excluir o item
-    <strong>"{{ data.name }}"</strong>?
+    <strong>"{{ userData.userFileName }}"</strong>?
   </p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>Cancelar</button>
   <button
     mat-stroked-button
-    [mat-dialog-close]="true"
+    mat-dialog-close="from delete button"
     color="warn"
     class="delete-button"
     (click)="delete()"
