@@ -3,3 +3,19 @@
   background-color: red;
   color: white;
 }
+
+h2 {
+  font-weight: 700;
+  color: red;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+span {
+  font-weight: 700;
+  color: red;
+}

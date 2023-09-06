@@ -65,7 +65,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.router.navigate(['home/upload'])
   }
 
-  openDialog(imageName: string, imageIndex: number) {
+  deleteImage(imageName: string, imageIndex: number) {
     const dialogRef = this.dialog.open(DialogContentComponent, {
       data: { userFileName: imageName, uid: this.user?.uid }
     })

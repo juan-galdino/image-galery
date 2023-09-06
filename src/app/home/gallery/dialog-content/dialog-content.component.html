@@ -1,9 +1,15 @@
 <h2 mat-dialog-title>Excluir esta imagem?</h2>
 <mat-dialog-content>
-  <p>
-    Você tem certeza que gostaria de excluir o item
-    <strong>"{{ userData.userFileName }}"</strong>?
-  </p>
+  <div class="content">
+    <p>
+      Você tem certeza que quer excluir a imagem
+      <strong>"{{ userData.userFileName }}"</strong>?
+    </p>
+    <p>
+      Atenção! Esta é uma ação sem volta e esta imagem será deletada
+      <span>permanentemente.</span>
+    </p>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-stroked-button mat-dialog-close>Cancelar</button>
