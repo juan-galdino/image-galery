@@ -10,28 +10,35 @@
       </ul>
     </div>
 
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu>
+      <ul class="nav__links">
+        <li mat-menu-item section-link>
+          <a (click)="scrollToSection('hero')">Início</a>
+        </li>
+        <li mat-menu-item section-link>
+          <a (click)="scrollToSection('how-it-works')">Como funciona?</a>
+        </li>
+        <li mat-menu-item section-link>
+          <a (click)="scrollToSection('features')">Funcionalidades</a>
+        </li>
+        <li mat-menu-item section-link>
+          <a (click)="scrollToSection('faq')">Suporte</a>
+        </li>
+        <li mat-menu-item><a (click)="navigateToLogin()">Logar</a></li>
+        <li mat-menu-item><a (click)="navigateToSignup()">Criar conta</a></li>
+      </ul>
+    </mat-menu>
+
+    <div class="nav__buttons">
+      <button mat-button (click)="navigateToLogin()">Logar</button>
+      <button mat-raised-button color="primary" (click)="navigateToSignup()">
+        Criar conta
       </button>
-
-      <mat-menu #menu>
-        <ul class="nav__links">
-          <li mat-menu-item section-link><a (click)="scrollToSection('hero')">Início</a></li>
-          <li mat-menu-item section-link><a (click)="scrollToSection('how-it-works')">Como funciona?</a></li>
-          <li mat-menu-item section-link><a (click)="scrollToSection('features')">Funcionalidades</a></li>
-          <li mat-menu-item section-link><a (click)="scrollToSection('faq')">Suporte</a></li>
-          <li mat-menu-item><a (click)="navigateToLogin()">Logar</a></li>
-          <li mat-menu-item><a (click)="navigateToSignup()">Criar conta</a></li>
-        </ul>
-      </mat-menu>
-  
-      <div class="nav__buttons">
-        <button mat-button (click)="navigateToLogin()">Logar</button>
-        <button mat-raised-button color="primary" (click)="navigateToSignup()">
-          Criar conta
-        </button>
-      </div>
-
+    </div>
   </nav>
 </header>
 
@@ -102,12 +109,9 @@
       <span class="section-label">Plataforma completa</span>
       <h2>Imagens armazenadas na plataforma e muito mais espaço local</h2>
       <p>
-        <strong>
-          Basta de espaço cheio no seu dispositivo!
-        </strong>
-        Ao enviar fotos para sua galeria virtual, você pode
-        apagar-las do seu aparelho e liberar espaço extra. Simples
-        e eficiente!
+        <strong> Basta de espaço cheio no seu dispositivo! </strong>
+        Ao enviar fotos para sua galeria virtual, você pode apagar-las do seu
+        aparelho e liberar espaço extra. Simples e eficiente!
       </p>
     </article>
     <article class="app-screenshot__photo">
@@ -191,7 +195,7 @@
             enviou para o servidor.
           </h3>
           <p>
-            Saiba quando e quantas imagens você já enviou. Na sua galeria o está
+            Saiba quando e quantas imagens você já enviou. Na sua galeria está o
             registro de todas as imagens que você armazenou com a gente. Legal,
             não é mesmo? Deixe de esperar para dar um lar digital para as suas
             imagens favoritas.
