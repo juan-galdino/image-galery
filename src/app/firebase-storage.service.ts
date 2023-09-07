@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
+import firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,10 @@ export class FirebaseStorageService {
         return of([])
       })
     )
+  }
+
+  updateFileName(oldPath: string, newName: string): Observable<any> {
+    return of({})
   }
 
   removeFile(path: string): Observable<any> {

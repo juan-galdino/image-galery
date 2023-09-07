@@ -51,7 +51,6 @@ h3 {
 }
 
 .image-card .image {
-  cursor: pointer;
   width: 4rem;
   height: 3.5rem;
   background-repeat: no-repeat;

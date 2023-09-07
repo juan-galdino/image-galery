@@ -27,7 +27,6 @@
         *ngFor="let image of images; let imageIndex = index"
       >
         <div
-          (click)="showImageInFullScreen(imageIndex)"
           class="image"
           [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
         ></div>
@@ -44,6 +43,12 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu>
+              <button
+                mat-menu-item
+                (click)="openRenameImageComponent(image.fullName, imageIndex)"
+              >
+                <mat-icon>edit</mat-icon>Renomear
+              </button>
               <button mat-menu-item (click)="showImageInFullScreen(imageIndex)">
                 <mat-icon>fullscreen</mat-icon>Mostrar imagem
               </button>
@@ -66,4 +71,11 @@
     [images]="images"
     (close)="closeFullScreenMode()"
   ></app-full-screen-image>
+  <app-rename-image
+    *ngIf="isRenaming"
+    [currentName]="imageName"
+    [uid]="user!.uid"
+    [imageIndex]="imageIndex"
+    (close)="closeRenameMode()"
+  ></app-rename-image>
 </section>

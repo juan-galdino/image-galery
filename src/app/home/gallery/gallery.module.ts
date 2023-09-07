@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { GalleryRoutingModule } from './gallery-routing.module';
 import { GalleryComponent } from './gallery.component';
 import { NoImagesImageComponent } from './no-images-image/no-images-image.component';
@@ -9,8 +11,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogContentComponent } from './dialog-content/dialog-content.component';
+import { MatInputModule } from '@angular/material/input';
+import { DialogContentComponent } from '../../shared/components/dialog-content/dialog-content.component';
 import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-image/full-screen-image.component';
+import { RenameImageComponent } from 'src/app/shared/components/rename-image/rename-image.component';
+
 
 
 @NgModule({
@@ -18,16 +23,19 @@ import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-
     GalleryComponent,
     NoImagesImageComponent,
     DialogContentComponent,
-    FullScreenImageComponent
+    FullScreenImageComponent,
+    RenameImageComponent
   ],
   imports: [
     CommonModule,
     GalleryRoutingModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule
   ]
 })
 export class GalleryModule { }
