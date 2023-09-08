@@ -14,8 +14,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { DialogContentComponent } from '../../shared/components/dialog-content/dialog-content.component';
 import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-image/full-screen-image.component';
-import { RenameImageComponent } from 'src/app/shared/components/rename-image/rename-image.component';
-
 
 
 @NgModule({
@@ -24,7 +22,6 @@ import { RenameImageComponent } from 'src/app/shared/components/rename-image/ren
     NoImagesImageComponent,
     DialogContentComponent,
     FullScreenImageComponent,
-    RenameImageComponent
   ],
   imports: [
     CommonModule,

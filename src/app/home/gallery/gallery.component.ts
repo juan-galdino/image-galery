@@ -22,10 +22,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
   isFullScreenMode = false
-  isRenaming = false
   imageUrl!: string
-  imageName!: string
-  imageIndex!: number
   userSubscription!: Subscription | null
   imagesSubscription!: Subscription | null
 
@@ -69,12 +66,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   headsToUploadImagesPage() {
     this.router.navigate(['home/upload'])
-  }
-
-  openRenameImageComponent(imageName: string, imageIndex: number) {
-    this.isRenaming = true
-    this.imageName = imageName
-    this.imageIndex = imageIndex
   }
 
   deleteImage(imageName: string, imageIndex: number) {
@@ -130,10 +121,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   closeFullScreenMode() {
     this.isFullScreenMode = false
-  }
-
-  closeRenameMode() {
-    this.isRenaming = false
   }
 
   ngOnDestroy(): void {
