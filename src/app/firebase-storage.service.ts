@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap } from 'rxjs';
+import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
 import firebase from 'firebase/compat';
+import { Reference } from '@angular/fire/compat/storage/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,72 @@ export class FirebaseStorageService {
   private _isLoaddingSub = new Subject<boolean>()
 
   constructor(private storage: AngularFireStorage) { }
+
+  updateProfilePhoto(file: File, newPath: string, user: firebase.User | null): Observable<any> {
+    const newFileRef = this.storage.ref(newPath)
+
+    const listRef = this.storage.ref('users/' + user!.uid + '/profile-photo/')
+
+    // upload
+    return from(newFileRef.put(file)).pipe(
+      switchMap(() => {
+        // get url
+        return newFileRef.getDownloadURL().pipe(
+            switchMap((url: string) => {
+              // update user
+              return from(user!.updateProfile({ photoURL: url })).pipe(
+                switchMap(() => {
+                  // list all photos
+                  return listRef.listAll().pipe(
+                    switchMap((resultList) => {
+                      if(resultList.items.length > 1) {
+                        const metadataPromisses = resultList.items.map(item => item.getMetadata())
+                        // all metadatas
+                        return from(Promise.all(metadataPromisses)).pipe(
+                          switchMap(metadatas => {
+                            const sortedList = resultList.items.sort((a: Reference, b: Reference) => {
+                              const aTime = new Date(metadatas[resultList.items.indexOf(a)].timeCreated).getTime()
+                              const bTime = new Date(metadatas[resultList.items.indexOf(b)].timeCreated).getTime()
+                              
+                              return bTime - aTime
+                            })
+                            // delete oldest one
+                            return from(sortedList[1].delete()).pipe(
+                              catchError(err => {
+                                console.error('Erro ao deletar imagem antiga: ')
+                                throw err
+                              })
+                            )
+                          })
+                        )
+                      }
+                      return of({})
+                    }),
+                    catchError(err => {
+                      console.error('Erro ao listar as fotos: ')
+                      throw err
+                    })
+                  )
+                }),
+                catchError(err => {
+                  console.error('Erro ao atualizar a foto de perfil: ')
+                  throw err
+                }),
+              )
+            }),
+            catchError(err => {
+              console.error('Erro ao atualizar o perfil do usuário: ')
+              throw err
+            })
+          )
+      }
+      ),
+      catchError(err => {
+        console.error('Erro no upload da imagem: ')
+        throw err
+      })
+   )
+  }
 
   uploadFile(file: File, path: string): Observable<number | undefined> {
     const fileRef = this.storage.ref(path)
@@ -99,10 +166,6 @@ export class FirebaseStorageService {
         return of([])
       })
     )
-  }
-
-  updateFileName(oldPath: string, newName: string): Observable<any> {
-    return of({})
   }
 
   removeFile(path: string): Observable<any> {
