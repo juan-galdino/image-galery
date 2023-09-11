@@ -57,20 +57,9 @@ label {
 }
 
 .files-list .single-file {
-  padding: 0.5rem;
-  justify-content: space-between;
-  align-items: center;
   border: dashed 1px #979797;
   margin-bottom: 1rem;
-  display: flex;
-  flex-grow: 1;
-}
-
-.files-list .single-file .delete {
-  display: flex;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  align-self: flex-end;
+  padding: 0.5rem;
 }
 
 .files-list .single-file .name {
@@ -89,9 +78,16 @@ label {
 }
 
 .files-list .single-file .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   width: 100%;
 }
 
-progress {
-  width: 100%;
+mat-progress-bar {
+  border-radius: 20px;
+}
+
+.message {
+  margin-top: 0.5rem;
 }
