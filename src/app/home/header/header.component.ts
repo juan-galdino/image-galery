@@ -33,9 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe( user => {
           if(user) {
             this.loggedUser = user
-            // user.updateProfile({photoURL: ""}).then(() => {})
             this.userPhotoURL = user.photoURL
-            console.log(user.photoURL)
             this.userName = user.displayName            
             this.userEmail = user.email
           }
@@ -52,16 +50,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isLoading = true
 
     if(this.loggedUser) {
-      const profilePhotoPath = 'users/' + this.loggedUser.uid + '/profile-photo/' + file.name
+      const newProfilePhotoPath = 'users/' + this.loggedUser.uid + '/profile-photo/' + file.name
 
-      this.firebaseStorageService.updateProfilePhoto(file, profilePhotoPath, this.loggedUser).subscribe(() => {
-        this.snackBar.open('Foto de perfil atualizada com sucesso!', 'OK', { duration: 5000 })
-        this.isLoading = false
-        this.userPhotoURL = this.loggedUser!.photoURL
-      })
+      this.firebaseStorageService.uploadProfilePhoto(file, newProfilePhotoPath)
+        .subscribe((value: number | undefined) => {
+          if(this.loggedUser && value === 100) {
+            this.firebaseStorageService.getNewProfilePhotoUrl(newProfilePhotoPath)
+              .subscribe( (url: string) => {
+                this.loggedUser?.updateProfile({photoURL: url})
+                .then(() => {
+
+                  this.isLoading = false
+                  this.userPhotoURL = this.loggedUser!.photoURL
+                  this.snackBar.open('Foto de perfil atualizada com sucesso!', 'OK', { duration: 5000 })
+    
+                  this.firebaseStorageService.deletePreviousProfilePhoto(this.loggedUser, newProfilePhotoPath).subscribe()
+                  }
+                )
+                .catch(err => {
+                  this.snackBar.open('Erro ao atualizar a foto.', 'OK', { duration: 5000 })
+                  this.isLoading = false
+                })
+              }
+            )
+          }
+        })  
     }
-  }
 
+  }
+  
   logout() {
     this.authenticationService.logout()
     this.router.navigate(['login'])

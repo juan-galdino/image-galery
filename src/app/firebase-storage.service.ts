@@ -3,7 +3,6 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
 import firebase from 'firebase/compat';
-import { Reference } from '@angular/fire/compat/storage/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,70 +19,54 @@ export class FirebaseStorageService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  updateProfilePhoto(file: File, newPath: string, user: firebase.User | null): Observable<any> {
-    const newFileRef = this.storage.ref(newPath)
+  uploadProfilePhoto(file: File, newPath: string): Observable<number | undefined> {
+    const newPhotoRef = this.storage.ref(newPath)
 
-    const listRef = this.storage.ref('users/' + user!.uid + '/profile-photo/')
+    const task = newPhotoRef.put(file)
 
-    // upload
-    return from(newFileRef.put(file)).pipe(
-      switchMap(() => {
-        // get url
-        return newFileRef.getDownloadURL().pipe(
-            switchMap((url: string) => {
-              // update user
-              return from(user!.updateProfile({ photoURL: url })).pipe(
-                switchMap(() => {
-                  // list all photos
-                  return listRef.listAll().pipe(
-                    switchMap((resultList) => {
-                      if(resultList.items.length > 1) {
-                        const metadataPromisses = resultList.items.map(item => item.getMetadata())
-                        // all metadatas
-                        return from(Promise.all(metadataPromisses)).pipe(
-                          switchMap(metadatas => {
-                            const sortedList = resultList.items.sort((a: Reference, b: Reference) => {
-                              const aTime = new Date(metadatas[resultList.items.indexOf(a)].timeCreated).getTime()
-                              const bTime = new Date(metadatas[resultList.items.indexOf(b)].timeCreated).getTime()
-                              
-                              return bTime - aTime
-                            })
-                            // delete oldest one
-                            return from(sortedList[1].delete()).pipe(
-                              catchError(err => {
-                                console.error('Erro ao deletar imagem antiga: ')
-                                throw err
-                              })
-                            )
-                          })
-                        )
-                      }
-                      return of({})
-                    }),
-                    catchError(err => {
-                      console.error('Erro ao listar as fotos: ')
-                      throw err
-                    })
-                  )
-                }),
-                catchError(err => {
-                  console.error('Erro ao atualizar a foto de perfil: ')
-                  throw err
-                }),
-              )
-            }),
-            catchError(err => {
-              console.error('Erro ao atualizar o perfil do usuário: ')
-              throw err
-            })
-          )
+    return task.percentageChanges().pipe(
+        catchError(err => {
+          console.error("Erro ao enviar nova foto de perfil ", err)
+          throw err
+        })
+      ) 
+  }
+
+  getNewProfilePhotoUrl( newPath: string): Observable<string> {
+    const newPhotoRef = this.storage.ref(newPath)
+    return newPhotoRef.getDownloadURL()
+  }
+
+ deletePreviousProfilePhoto(user: firebase.User | null, newPhotoPath: string): Observable<any> {
+  const path = 'users/' + user!.uid + '/profile-photo'
+  
+  return this.storage.ref(path).list().pipe( 
+    map(listResult => {
+    
+    const deletePromises: Promise<void>[] = []
+
+    listResult.items.forEach(itemRef => {
+      if(itemRef.fullPath !== newPhotoPath) {
+        deletePromises.push(itemRef.delete())
       }
-      ),
-      catchError(err => {
-        console.error('Erro no upload da imagem: ')
-        throw err
-      })
-   )
+    })
+
+    if(deletePromises.length > 0) {
+      return from(Promise.all(deletePromises)).pipe(
+        catchError(err => {
+          console.error('Erro ao deletar a foto de perfil anterior.')
+          throw err
+        }) 
+      )
+    } else return of({})
+    
+  }),
+  catchError(err => {
+    console.error('Erro ao listar todas as fotos', err)
+    throw err
+  })
+  )
+      
   }
 
   uploadFile(file: File, path: string): Observable<number | undefined> {
