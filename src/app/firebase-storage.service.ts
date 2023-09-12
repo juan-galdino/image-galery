@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
 import firebase from 'firebase/compat';
 
@@ -145,7 +145,7 @@ export class FirebaseStorageService {
       }),
       
       catchError(error => {
-        console.log(error)
+        console.error(error)
         return of([])
       })
     )
