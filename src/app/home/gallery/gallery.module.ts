@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { DialogContentComponent } from '../../shared/components/dialog-content/dialog-content.component';
 import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-image/full-screen-image.component';
+import { ImagePreviewComponent } from './image-preview/image-preview.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FullScreenImageComponent } from 'src/app/shared/components/full-screen-
     NoImagesImageComponent,
     DialogContentComponent,
     FullScreenImageComponent,
+    ImagePreviewComponent,
   ],
   imports: [
     CommonModule,

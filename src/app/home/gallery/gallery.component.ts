@@ -17,10 +17,14 @@ import firebase from 'firebase/compat';
 })
 export class GalleryComponent implements OnInit, OnDestroy {
   isMediumScreen = false
+  isLargeScreen = false
   user!: firebase.User | null
   images: ImageProps[] = []
+  previewImage!: ImageProps
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
+  isGalleryMode!: boolean
+  galleryModeSub!: Subscription 
   isFullScreenMode = false
   imageUrl!: string
   userSubscription!: Subscription | null
@@ -35,13 +39,25 @@ export class GalleryComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const customWidth = '(min-width: 37.5em)'
-    this.breakpointObserver.observe([customWidth]).subscribe( ()=> {
+    this.galleryModeSub = this.firebaseStorageService.getViewMode()
+      .subscribe(value => {
+        this.isGalleryMode = value
+      })
+
+    const mediumScreenWidth = '(min-width: 37.5em)'
+    const largeScreenWidth = '(min-width: 47.9375em)'
+
+    this.breakpointObserver.observe([mediumScreenWidth, largeScreenWidth]).subscribe( ()=> {
       this.isMediumScreen = false
 
-      if ( this.breakpointObserver.isMatched(customWidth) ) { 
+      if ( this.breakpointObserver.isMatched(mediumScreenWidth) ) { 
         this.isMediumScreen = true
-      } 
+        this.isLargeScreen = false
+      }
+      
+      if ( this.breakpointObserver.isMatched(largeScreenWidth) ) {
+        this.isLargeScreen = true
+      }
       
     })
 
@@ -59,9 +75,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
   fetchImages(userId: string) {
     this.imagesSubscription = this.firebaseStorageService.getImagesUrls(userId).subscribe(data => { 
       this.images = data
+      this.imageUrl = this.images[0].url
+      this.previewImage = this.images[0]
     }, (error: any) => {
       console.log(error)
     })
+  }
+
+  toggleGaleryMode() {
+    this.isGalleryMode = !this.isGalleryMode
+    this.firebaseStorageService.setViewMode(this.isGalleryMode)
   }
 
   headsToUploadImagesPage() {
@@ -119,11 +142,17 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.imageUrl = this.images[imageIndex].url
   }
 
+  showImageInPreview(imageIndex: number) {
+    this.imageUrl = this.images[imageIndex].url
+    this.previewImage = this.images[imageIndex]
+  }
+
   closeFullScreenMode() {
     this.isFullScreenMode = false
   }
 
   ngOnDestroy(): void {
+    this.galleryModeSub.unsubscribe()
     this.userSubscription?.unsubscribe()
     this.imagesSubscription?.unsubscribe()
   }

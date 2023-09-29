@@ -17,10 +17,63 @@
       </button>
     </article>
   </article>
+  <div class="container-toggle-view">
+    <button
+      mat-icon-button
+      class="toggle-view-button"
+      (click)="toggleGaleryMode()"
+    >
+      <mat-icon *ngIf="isGalleryMode">view_list</mat-icon>
+      <mat-icon *ngIf="!isGalleryMode">grid_view</mat-icon>
+    </button>
+  </div>
+
   <article *ngIf="isLoadding$ | async" class="loader">
     <mat-spinner diameter="125"></mat-spinner>
   </article>
-  <article>
+
+  <!-- Gallery mode -->
+  <article *ngIf="isGalleryMode" class="gallery-layout">
+    <div class="preview-card" *ngIf="isLargeScreen && previewImage">
+      <app-image-preview [currentImage]="imageUrl"></app-image-preview>
+      <div class="preview-card__text">
+        <h2>{{ previewImage.fullName }}</h2>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu>
+          <button
+            mat-menu-item
+            (click)="showImageInFullScreen(images.indexOf(previewImage))"
+          >
+            <mat-icon>fullscreen</mat-icon>Mostrar imagem
+          </button>
+          <button
+            mat-menu-item
+            [ngStyle]="{ color: 'red' }"
+            (click)="
+              deleteImage(previewImage.fullName, images.indexOf(previewImage))
+            "
+          >
+            <mat-icon color="warn">delete_outline</mat-icon>Excluir
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <ul class="gallery-layout__list">
+      <li
+        *ngFor="let image of images; let imageIndex = index"
+        class="gallery-layout__card"
+        (click)="showImageInPreview(imageIndex)"
+      >
+        <img [src]="image.url" [alt]="image.fullName" loading="lazy" />
+      </li>
+    </ul>
+  </article>
+
+  <!-- List view mode -->
+  <article *ngIf="!isGalleryMode">
     <ul>
       <li
         class="image-card"

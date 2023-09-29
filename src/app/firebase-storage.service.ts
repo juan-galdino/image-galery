@@ -12,7 +12,7 @@ export class FirebaseStorageService {
   images: ImageProps[] = []
   isListResultEmpty = false
   private hasNewImage = false
-  
+  private _isGaleryMode = true
   messageSubject = new Subject<string>()
   isImagesArrayEmpty = new Subject<boolean>()
   private _isLoaddingSub = new Subject<boolean>()
@@ -84,6 +84,14 @@ export class FirebaseStorageService {
         this.messageSubject.next('Envio concluído!')
       })
     )
+  }
+
+  getViewMode(): Observable<boolean> {
+    return of(this._isGaleryMode)
+  }
+
+  setViewMode(value: boolean) {
+    this._isGaleryMode = value
   }
 
   getImagesUrls(userId: string): Observable<ImageProps[]> {
