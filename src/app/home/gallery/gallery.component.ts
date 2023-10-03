@@ -104,6 +104,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
       if(result === "from delete button") {
         this.firebaseStorageService.images.splice(imageIndex, 1)
+        this.showImageInPreview(0)
       }
 
       if(this.firebaseStorageService.images.length === 0) {
