@@ -144,6 +144,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   showImageInPreview(imageIndex: number) {
+    if(!this.isLargeScreen) {
+      this.showImageInFullScreen(imageIndex)
+    }
+    
     this.imageUrl = this.images[imageIndex].url
     this.previewImage = this.images[imageIndex]
   }

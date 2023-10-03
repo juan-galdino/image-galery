@@ -17,7 +17,7 @@
       </button>
     </article>
   </article>
-  <div class="container-toggle-view">
+  <div class="container-toggle-view" *ngIf="images.length != 0">
     <button
       mat-icon-button
       class="toggle-view-button"
@@ -34,8 +34,13 @@
 
   <!-- Gallery mode -->
   <article *ngIf="isGalleryMode" class="gallery-layout">
+    <!-- Preview Mode -->
     <div class="preview-card" *ngIf="isLargeScreen && previewImage">
-      <app-image-preview [currentImage]="imageUrl"></app-image-preview>
+      <app-image-preview
+        [currentImage]="imageUrl"
+        (click)="showImageInFullScreen(images.indexOf(previewImage))"
+      ></app-image-preview>
+
       <div class="preview-card__text">
         <h2>{{ previewImage.fullName }}</h2>
         <button mat-icon-button [matMenuTriggerFor]="menu">
