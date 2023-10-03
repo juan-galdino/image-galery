@@ -1,10 +1,23 @@
 <section>
   <div class="container">
+    <div class="image">
+      <img
+        src="../../assets/login-image.png"
+        alt="Imagem por tawatchai07 de Freepik. Mulher branca de toca branca, casaco vermelho, calça jeans e tênis marrom, em cima de uma pedra no alto de um monte. Ela está mirando sua câmera fotográfica para o horizonte."
+        loading="lazy"
+      />
+      <h2 class="galeria">Galeria</h2>
+      <h2 class="pessoal">Pessoal</h2>
+      <h2 class="login">Login</h2>
+      <span><strong>Imagem por tawatchai07 de Freepik</strong></span>
+    </div>
     <form [formGroup]="form">
       <div class="back-to-home">
-        <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
+        <a mat-button (click)="goToHomePage()"
+          ><mat-icon>arrow_back</mat-icon> Voltar ao início</a
+        >
       </div>
-      
+
       <h1>Entre com sua conta</h1>
       <mat-form-field class="no-padding-on-errors-globally">
         <mat-label>Email</mat-label>
