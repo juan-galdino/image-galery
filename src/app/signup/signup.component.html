@@ -1,10 +1,18 @@
 <section>
   <div class="container">
+    <div class="image">
+      <h2 class="galeria">Galeria</h2>
+      <h2 class="pessoal">Pessoal</h2>
+      <h2 class="cadastro">Cadastro</h2>
+      <span><strong>Imagem por tawatchai07 de Freepik</strong></span>
+    </div>
     <form [formGroup]="form">
       <div class="back-to-home">
-        <a mat-button (click)="goToHomePage()"><mat-icon>arrow_back</mat-icon> Voltar ao início</a>
+        <a mat-button (click)="goToHomePage()"
+          ><mat-icon>arrow_back</mat-icon> Voltar ao início</a
+        >
       </div>
-      
+
       <h1>Crie sua nova conta</h1>
       <mat-form-field class="no-padding-on-errors-globally">
         <mat-label>Nome</mat-label>

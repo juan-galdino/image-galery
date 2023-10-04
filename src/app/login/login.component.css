@@ -4,16 +4,16 @@ section {
   justify-content: center;
   height: 100vh;
   background-color: #ebeef2;
+  padding-inline: 1rem;
 }
 
 .container {
-  width: 85%;
+  width: 100%;
   border-radius: 50px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: white;
 }
 
-img,
 h2,
 span {
   display: none;
@@ -54,20 +54,28 @@ button:not(button[mat-button]) {
   width: 100%;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 767px) {
   .container {
-    position: relative;
+    width: 95%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    align-items: stretch;
+  }
+
+  form {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 
   .image {
-    overflow: hidden;
+    position: relative;
     border-radius: 50px 0 0 50px;
+    background-image: url("../../assets/login-image.png");
+    background-position: left 40% top 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
-  img,
   h2,
   span {
     display: block;
@@ -79,34 +87,35 @@ button:not(button[mat-button]) {
     position: absolute;
     z-index: 5;
     color: white;
-    font-size: clamp(2.5rem, 4vw, 3.125rem);
-  }
-
-  .galeria {
-    top: 5rem;
-    right: calc(50% + 6rem);
-  }
-
-  .pessoal {
-    top: 8.5rem;
-    right: calc(50% + 3rem);
+    font-size: clamp(1rem, 4vw, 2rem);
   }
 
   .login {
-    bottom: 8rem;
-    right: calc(50% + 3.25rem);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .galeria {
+    top: 4rem;
+    left: 4rem;
+  }
+
+  .pessoal {
+    top: 6.5rem;
+    left: 6rem;
+  }
+
+  .login {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 4rem;
   }
 
   span {
     position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+    bottom: 4rem;
+    left: 4rem;
     color: #cbcccd;
     font-size: 0.8rem;
-  }
-
-  img {
-    width: 100%;
   }
 
   form {

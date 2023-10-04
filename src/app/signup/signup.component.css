@@ -1,12 +1,22 @@
 section {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   background-color: #ebeef2;
+  padding-inline: 1rem;
 }
 
 .container {
   width: 100%;
+  border-radius: 50px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: white;
+}
+
+h2,
+span {
+  display: none;
 }
 
 form {
@@ -14,11 +24,9 @@ form {
   flex-direction: column;
   gap: 1rem;
   margin-inline: auto;
-  max-width: 25rem;
+  max-width: 40rem;
   padding: 2rem;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background-color: white;
-  border-radius: 20px;
+  border-radius: 50px;
 }
 
 .back-to-home a {
@@ -39,4 +47,73 @@ button[mat-button] {
 
 button:not(button[mat-button]) {
   border-radius: 50px;
+}
+
+@media screen and (min-width: 767px) {
+  .container {
+    width: 95%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  form {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .image {
+    position: relative;
+    border-radius: 50px 0 0 50px;
+    background-image: url("../../assets/signup-image.png");
+    background-position: left 40% top 40%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  h2,
+  span {
+    display: block;
+  }
+
+  .galeria,
+  .pessoal,
+  .cadastro {
+    position: absolute;
+    z-index: 5;
+    color: white;
+    font-size: clamp(1rem, 4vw, 2rem);
+  }
+
+  .cadastro {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .galeria {
+    top: 4rem;
+    left: 4rem;
+  }
+
+  .pessoal {
+    top: 6.5rem;
+    left: 6rem;
+  }
+
+  .cadastro {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 4rem;
+  }
+
+  span {
+    position: absolute;
+    bottom: 4rem;
+    left: 4rem;
+    color: #cbcccd;
+    font-size: 0.8rem;
+  }
+
+  form {
+    width: 90%;
+  }
 }
