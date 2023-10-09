@@ -311,6 +311,64 @@ header {
 }
 
 .footer {
-  padding: 2rem;
-  border-top: 1px solid #ebeff2;
+  background-color: rgb(8 , 8  , 8 );
+  color: #adadad;
+  padding: 4rem;
+  line-height: 1.5;
+
+  h2 {
+    color: white
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  
+    @media screen and (min-width: 47.9375em) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    ul {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: 47.9375em) {
+      margin-inline: auto;
+    }
+
+    a {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: white;
+    }
+
+  }
+
+
+  &__copyright {  
+    margin-top: 2rem;
+    padding-top: 0.5rem; 
+    text-align: center;
+    border-top: 1px solid #ebeff2;
+    color: white;
+  }
 }
+
