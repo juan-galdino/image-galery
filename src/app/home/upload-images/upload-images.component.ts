@@ -3,6 +3,7 @@ import { FirebaseStorageService } from '../../firebase-storage.service';
 import { Observable, Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/auth/auth.service';
 import firebase from 'firebase/compat';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-images',
@@ -20,7 +21,8 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthenticationService,
-    private firebaseStorageService: FirebaseStorageService
+    private firebaseStorageService: FirebaseStorageService,
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +58,10 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
 
   formatBytes(bytes: number): string {
     return this.firebaseStorageService.formatImageSize(bytes)
+  }
+
+  goToGallery() {
+    this.router.navigate(['/galeria'])
   }
 
   ngOnDestroy(): void {

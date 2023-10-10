@@ -91,3 +91,15 @@ mat-progress-bar {
 .message {
   margin-top: 0.5rem;
 }
+
+.check-photos {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.check-photos button {
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 1.5rem;
+}

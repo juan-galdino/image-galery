@@ -47,3 +47,9 @@
     </div>
   </div>
 </div>
+
+<div class="check-photos" *ngIf="message">
+  <button mat-raised-button color="primary" (click)="goToGallery()">
+    {{ files.length === 1 ? "Ver nova foto" : "Ver novas fotos" }}
+  </button>
+</div>
