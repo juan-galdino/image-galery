@@ -100,6 +100,8 @@ h3 {
 /* Gallery mode layout */
 
 .preview-card {
+  position: sticky;
+  top: 0;
   border-radius: 20px 20px 0 0;
   border: 1px solid #e2e6ea;
 }
@@ -111,10 +113,8 @@ h3 {
 }
 
 .gallery-layout__list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  justify-content: center;
 }
 
 .gallery-layout__card {
@@ -140,13 +140,17 @@ h3 {
 @media screen and (min-width: 47.9375em) {
   .gallery-layout {
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 1fr 1fr;
     align-items: start;
     gap: 2rem;
   }
 
   .gallery-layout__list {
-    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .gallery-layout__card {
+    max-width: 90rem;
   }
 }
