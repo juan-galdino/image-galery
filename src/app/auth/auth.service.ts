@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   recoverPassword(email: string): Observable<void> {
-    return from(this.auth.sendPasswordResetEmail(email))
+    return from(this.auth.sendPasswordResetEmail(email, {url: "https://image-galery-ng.web.app/login"}))
   }
 
   login(params: UserSignature): Observable<any> {
