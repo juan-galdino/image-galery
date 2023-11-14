@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
+import { FooterComponent } from './footer/footer.component';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -12,7 +13,7 @@ describe('LandingPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LandingPageComponent],
+      declarations: [LandingPageComponent, FooterComponent],
       imports: [
         BrowserAnimationsModule,
         MatIconModule,
