@@ -1,0 +1,65 @@
+<ng-container *ngIf="isActionCodeChecked" [ngSwitch]="mode">
+  <ng-container *ngSwitchCase="'resetPassword'">
+    <section>
+      <article class="container" *ngIf="!isPasswordConfirmed">
+        <h1>Redefinição de nova senha</h1>
+        <p>
+          para <strong>{{ accountEmail }}</strong>
+        </p>
+        <form [formGroup]="form">
+          <mat-form-field class="no-padding-on-errors-globally">
+            <mat-label>Insira uma nova senha</mat-label>
+            <input
+              matInput
+              [type]="hide ? 'password' : 'text'"
+              formControlName="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('password')!.hasError('required')">
+              Digite uma nova senha.
+            </mat-error>
+          </mat-form-field>
+          <div class="aligned-to-right">
+            <button
+              *ngIf="!isConfirming"
+              mat-raised-button
+              color="primary"
+              [disabled]="!form.get('password')!.valid"
+              (click)="handleResetPassword()"
+            >
+              Salvar nova senha
+            </button>
+            <button
+              class="loader"
+              *ngIf="isConfirming"
+              mat-raised-button
+              color="primary"
+            >
+              <mat-spinner color="accent" diameter="25"></mat-spinner>
+            </button>
+          </div>
+        </form>
+      </article>
+
+      <article class="container" *ngIf="isPasswordConfirmed">
+        <h1>Senha atualizada com sucesso!</h1>
+        <p>
+          Agora você pode retornar para a página de login e entrar na sua conta.
+        </p>
+        <button mat-raised-button color="primary" (click)="backToLogin()">
+          Voltar para Login
+        </button>
+      </article>
+    </section>
+  </ng-container>
+  <ng-container *ngSwitchCase="'recoverEmail'"></ng-container>
+  <ng-container *ngSwitchCase="'verifyEmail'"></ng-container>
+</ng-container>

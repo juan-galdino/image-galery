@@ -1,0 +1,39 @@
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ebeef2;
+  overflow: hidden;
+}
+
+.container {
+  padding: 3rem;
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: white;
+  max-width: 37.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+mat-form-field {
+  width: -webkit-fill-available;
+}
+
+button[mat-raised-button] {
+  margin-top: 1rem;
+  border-radius: 50px;
+}
+
+.aligned-to-right {
+  text-align: end;
+}
+
+.loader {
+  width: 10.625rem;
+}

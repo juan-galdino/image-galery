@@ -28,6 +28,10 @@ export class AuthenticationService {
     )
   }
 
+  getAuth(): AngularFireAuth {
+    return this.auth
+  }
+
   get isAuthenticated(): Observable<boolean> {
     return this.isAuthenticated$
   }
