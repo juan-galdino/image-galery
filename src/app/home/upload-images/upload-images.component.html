@@ -23,33 +23,28 @@
 </div>
 
 <div *ngIf="isUploading" class="files-list">
-  <div class="single-file" *ngFor="let file of files; let i = index">
+  <div class="single-file" *ngFor="let upload of fileUploads">
     <div class="info">
       <h4 class="name">
-        {{ file.name }}
+        {{ upload.file.name }}
       </h4>
       <p class="size">
-        {{ formatBytes(file.size) }}
+        {{ formatBytes(upload.file.size) }}
       </p>
       <mat-progress-bar
-        *ngIf="!($uploadProgress | async)"
-        mode="indeterminate"
-      ></mat-progress-bar>
-      <mat-progress-bar
-        *ngIf="$uploadProgress | async"
+        *ngIf="upload.progress !== undefined"
         mode="determinate"
-        [value]="$uploadProgress | async"
+        [value]="upload.progress"
       ></mat-progress-bar>
-
-      <span class="message">
-        {{ message }}
-      </span>
+      <div class="message">
+        {{ upload.message }}
+      </div>
     </div>
   </div>
 </div>
 
-<div class="check-photos" *ngIf="message">
+<div class="check-photos" *ngIf="isUploadComplete">
   <button mat-raised-button color="primary" (click)="goToGallery()">
-    {{ files.length === 1 ? "Ver nova foto" : "Ver novas fotos" }}
+    {{ fileUploads.length === 1 ? "Ver nova foto" : "Ver novas fotos" }}
   </button>
 </div>

@@ -118,6 +118,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
     return imageName.length > 8 ? imageName.substring(0, 10) + "..." : imageName
   }
 
+  getMediumName(imageName: string): string {
+    return imageName.length > 30 ? imageName.substring(0, 30) + "..." : imageName
+  }
+
   getRelativeTime(timeCreated: string): string {
     const timeMs = new Date(timeCreated).getTime() 
 

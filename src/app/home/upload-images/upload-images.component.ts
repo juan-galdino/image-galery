@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseStorageService } from '../../firebase-storage.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/auth/auth.service';
 import firebase from 'firebase/compat';
 import { Router } from '@angular/router';
+
+type FileUpload = {file: File, progress: number | undefined, message?: string | undefined, id: string};
 
 @Component({
   selector: 'app-upload-images',
@@ -11,12 +13,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./upload-images.component.css']
 })
 export class UploadImagesComponent implements OnInit, OnDestroy {
-  $uploadProgress!: Observable<number | undefined>
+  progress: number | undefined
   isUploading = false
-  message!: string
-  messageSubscription!: Subscription
-  files: any[] = []
+  isUploadComplete = false
+  completeUploadSubscription!: Subscription
+  uploadStatusSub!: Subscription
+  fileUploads: FileUpload[] = []
   loggedUser!: firebase.User | null
+  uploadSub: Subscription | undefined
   userSubscription!: Subscription | null
 
   constructor(
@@ -26,46 +30,65 @@ export class UploadImagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-     this.userSubscription = this.authService.user$.subscribe(user => {
-      if(user) {
-        this.loggedUser = user
-      }
+    this.userSubscription = this.authService.user$.subscribe(user => user ? this.loggedUser = user: null)
+
+    this.completeUploadSubscription = this.firebaseStorageService.uploadCompleteSubject.subscribe(value => {
+      this.isUploadComplete = value
     })
 
-    this.messageSubscription = this.firebaseStorageService.messageSubject.subscribe(value => {
-      this.message = value
-    })  
+    this.uploadStatusSub = this.firebaseStorageService.uploadStatus.subscribe(uploadId => {
+      const upload = this.fileUploads.find(upload => upload.id === uploadId)
+
+      if(upload) {
+        upload.message = "Envio completo!"
+      }
+    })
   }
 
-  onFileDropped(file: File) {
+  onFileDropped(file: File): void {
     this.uploadFile(file)
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     if(event.target.files) {
       this.uploadFile(event.target.files[0])
     }
   }
 
-  uploadFile(file: File) {
-    if(this.loggedUser) {
-      this.files.push(file)
-      this.isUploading = true
-      const filePath = 'users/'+ this.loggedUser.uid +'/uploads/' + file.name
-      this.$uploadProgress = this.firebaseStorageService.uploadFile(file, filePath)
-    }
+  uploadFile(file: File): void {
+    if(!this.loggedUser) return  
+
+    const filePath = 'users/'+ this.loggedUser.uid +'/uploads/' + file.name
+    const uploadId = window.crypto.randomUUID()
+    const newUpload: FileUpload = {file: file, progress: undefined, id: uploadId} 
+
+    this.fileUploads.push(newUpload)
+    this.isUploading = true
+
+    this.uploadSub = this.firebaseStorageService.uploadFile(newUpload.file, filePath, uploadId).subscribe(
+      (percentage) => {
+        newUpload.progress = percentage
+        newUpload.message = "Enviando..."
+      },
+      (error: any) => {
+        console.error(error)
+      }
+    )
   }
 
   formatBytes(bytes: number): string {
     return this.firebaseStorageService.formatImageSize(bytes)
   }
 
-  goToGallery() {
+  goToGallery(): void {
     this.router.navigate(['/galeria'])
   }
 
   ngOnDestroy(): void {
-    this.messageSubscription.unsubscribe()
+    this.uploadSub?.unsubscribe()
+    this.uploadStatusSub.unsubscribe()
+    this.isUploadComplete = false
+    this.completeUploadSubscription.unsubscribe()
     this.userSubscription?.unsubscribe()
   }
 }

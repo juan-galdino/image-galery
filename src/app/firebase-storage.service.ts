@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap } from 'rxjs';
+import { Observable, Subject, catchError, finalize, forkJoin, from, map, mergeMap, of, tap, throwError } from 'rxjs';
 import { ImageProps } from './shared/image-props.model';
 import firebase from 'firebase/compat';
 
@@ -13,7 +13,8 @@ export class FirebaseStorageService {
   isListResultEmpty = false
   private hasNewImage = false
   private _isGaleryMode = true
-  messageSubject = new Subject<string>()
+  uploadStatus = new Subject<string>()
+  uploadCompleteSubject = new Subject<boolean>()
   isImagesArrayEmpty = new Subject<boolean>()
   private _isLoaddingSub = new Subject<boolean>()
 
@@ -69,21 +70,26 @@ export class FirebaseStorageService {
       
   }
 
-  uploadFile(file: File, path: string): Observable<number | undefined> {
+  uploadFile(file: File, path: string, uploadId: string): Observable<number | undefined> {
     const fileRef = this.storage.ref(path)
     const task = fileRef.put(file)
 
-    return task.percentageChanges().pipe(
-      tap( () => {
-        this.messageSubject.next('')
-      }),
-      finalize( () => {
-        this.hasNewImage = true
-        this.isListResultEmpty = false
-        this.isImagesArrayEmpty.next(false)
-        this.messageSubject.next('Envio concluído!')
-      })
-    )
+    return new Observable<number | undefined>(observer => {
+      task.percentageChanges().pipe(
+        tap((percentage) => observer.next(percentage)),
+        catchError(error => {
+          observer.error(error);
+          return throwError(error);
+        }),
+        finalize(() => {
+          this.uploadStatus.next(uploadId)
+          this.uploadCompleteSubject.next(true)
+          this.hasNewImage = true
+          this.isListResultEmpty = false
+          this.isImagesArrayEmpty.next(false)
+        })
+        ).subscribe()
+    })
   }
 
   getViewMode(): Observable<boolean> {
