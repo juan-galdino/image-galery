@@ -212,14 +212,21 @@ button.toggle-settings-button:active:after {
 .settings-box button {
   display: flex;
   align-items: flex-end;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
   padding: 0.5rem;
   width: 100%;
   margin-top: 0.5rem;
+  gap: 0.25rem;
 }
 
-.settings-box button svg {
-  margin-right: 0.25rem;
+.settings-box button.support-button a {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.settings-box button.support-button a:hover {
+  color: black;
 }
 
 .settings-box button:hover {
