@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { GoogleAuthProvider } from '@angular/fire/auth'
 import { Observable, catchError, from, shareReplay, switchMap } from 'rxjs';
 import firebase from 'firebase/compat';
 import { FirebaseStorageService } from '../firebase-storage.service';
@@ -52,17 +53,33 @@ export class AuthenticationService {
     return from(
       this.auth.createUserWithEmailAndPassword(
         params.email, params.password
+      ))
+      .pipe(
+        switchMap(userCredential => {
+          const user = userCredential.user
+          
+          return from(user!.updateProfile({
+            displayName: params.name
+          }))
+
+        }),
+        catchError((error: any) => {
+          throw error
+        })
       )
-    ).pipe(
-      switchMap(userCredential => {
-        const user = userCredential.user
+  }
+
+  signinWithGoogle() {
+    return from(this.auth.signInWithPopup(new GoogleAuthProvider))
+    .pipe(
+      switchMap(res => {
+        const user = res.user
         
         return from(user!.updateProfile({
-          displayName: params.name
+          displayName: res.additionalUserInfo?.username
         }))
-
       }),
-      catchError((error: any) => {
+      catchError(error => {
         throw error
       })
     )

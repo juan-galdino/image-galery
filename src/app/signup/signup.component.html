@@ -7,72 +7,104 @@
       <span><strong>Imagem por tawatchai07 de Freepik</strong></span>
     </div>
     <form [formGroup]="form">
-      <div class="back-to-home">
-        <a mat-button (click)="goToHomePage()"
-          ><mat-icon>arrow_back</mat-icon> Voltar ao início</a
-        >
-      </div>
+      <div>
+        <div class="back-to-home">
+          <a mat-button (click)="goToHomePage()"
+            ><mat-icon>arrow_back</mat-icon> Voltar ao início</a
+          >
+        </div>
 
-      <h1>Crie sua nova conta</h1>
-      <mat-form-field class="no-padding-on-errors-globally">
-        <mat-label>Nome</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Ex: Atlas"
-          formControlName="name"
-        />
-        <mat-error> Digite algum nome. </mat-error>
-      </mat-form-field>
-      <mat-form-field class="no-padding-on-errors-globally">
-        <mat-label>Email</mat-label>
-        <input
-          type="email"
-          matInput
-          placeholder="Ex: pat@example.com"
-          formControlName="email"
-        />
-        <mat-error *ngIf="form.get('email')!.hasError('required')">
-          Digite algum email.
-        </mat-error>
-        <mat-error *ngIf="form.get('email')!.hasError('email')">
-          Digite um email válido.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="no-padding-on-errors-globally">
-        <mat-label>Senha</mat-label>
-        <input
-          type="password"
-          matInput
-          placeholder="Senha"
-          formControlName="password"
-        />
-        <mat-error> Digite alguma senha. </mat-error>
-      </mat-form-field>
-      <button
-        *ngIf="!isUserBeingCreated"
-        mat-raised-button
-        color="primary"
-        test-id="signup-button"
-        [disabled]="!form.valid"
-        (click)="onSignup()"
-      >
-        Cadastrar
-      </button>
-      <button
-        *ngIf="isUserBeingCreated"
-        mat-raised-button
-        color="primary"
-        test-id="signup-loader"
-      >
-        <mat-spinner color="accent" diameter="25"></mat-spinner>
-      </button>
-      <button
-        mat-stroked-button
-        (click)="goToLoginPage()"
-        test-id="heads-to-login-page-button"
-      >
-        Já tenho conta
+        <div class="form-content">
+          <h1>Crie sua nova conta</h1>
+          <mat-form-field class="no-padding-on-errors-globally">
+            <mat-label>Nome</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Ex: Atlas"
+              formControlName="name"
+            />
+            <mat-error> Digite algum nome. </mat-error>
+          </mat-form-field>
+          <mat-form-field class="no-padding-on-errors-globally">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Ex: pat@example.com"
+              formControlName="email"
+            />
+            <mat-error *ngIf="form.get('email')!.hasError('required')">
+              Digite algum email.
+            </mat-error>
+            <mat-error *ngIf="form.get('email')!.hasError('email')">
+              Digite um email válido.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="no-padding-on-errors-globally">
+            <mat-label>Senha</mat-label>
+            <input
+              type="password"
+              matInput
+              placeholder="Senha"
+              formControlName="password"
+            />
+            <mat-error> Digite alguma senha. </mat-error>
+          </mat-form-field>
+          <button
+            *ngIf="!isUserBeingCreated"
+            mat-raised-button
+            color="primary"
+            test-id="signup-button"
+            [disabled]="!form.valid"
+            (click)="onSignup()"
+          >
+            Cadastrar
+          </button>
+          <button
+            *ngIf="isUserBeingCreated"
+            mat-raised-button
+            color="primary"
+            test-id="signup-loader"
+          >
+            <mat-spinner color="accent" diameter="25"></mat-spinner>
+          </button>
+          <button
+            mat-stroked-button
+            (click)="goToLoginPage()"
+            test-id="heads-to-login-page-button"
+          >
+            Já tenho conta
+          </button>
+        </div>
+      </div>
+      <div class="or">ou</div>
+      <button class="google-button" (click)="onSignupWithGoogle()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M23.9981 12.2884C23.9981 11.4779 23.9181 10.6413 23.7847 9.85693H12.2344V14.4845H18.8498C18.5831 15.9747 17.7028 17.2819 16.3957 18.1186L20.3436 21.1252C22.6644 19.0075 23.9981 15.9224 23.9981 12.2884Z"
+            fill="#4280EF"
+          />
+          <path
+            d="M12.2376 24.0011C15.5453 24.0011 18.3196 22.9291 20.3469 21.099L16.3989 18.1186C15.3053 18.8506 13.8915 19.2689 12.2376 19.2689C9.03659 19.2689 6.3424 17.1512 5.35541 14.3276L1.30078 17.3865C3.38145 21.4389 7.59613 24.0011 12.2376 24.0011Z"
+            fill="#34A353"
+          />
+          <path
+            d="M5.35505 14.3017C4.84822 12.8115 4.84822 11.1905 5.35505 9.70027L1.30042 6.61523C-0.433472 10.014 -0.433472 14.0141 1.30042 17.3867L5.35505 14.3017Z"
+            fill="#F6B704"
+          />
+          <path
+            d="M12.2376 4.75874C13.9715 4.73259 15.6787 5.3862 16.9325 6.5627L20.4269 3.11164C18.2129 1.07238 15.2786 -0.0256881 12.2376 0.000456295C7.59613 0.000456295 3.38145 2.56261 1.30078 6.61499L5.35541 9.70003C6.3424 6.85029 9.03659 4.75874 12.2376 4.75874Z"
+            fill="#E54335"
+          />
+        </svg>
+        Cadastrar com uma conta Google
       </button>
     </form>
   </div>

@@ -46,6 +46,16 @@ export class SignupComponent implements OnInit {
     })
   }
 
+  onSignupWithGoogle() {
+    this.authService.signinWithGoogle().subscribe(() => {
+      this.router.navigate(['home/galeria'])
+    }, error => {
+      this.snackBar.open(error.message, 'OK', {
+        duration: 5000
+      })
+    })
+  }
+
   goToLoginPage() {
     this.router.navigate(['login'])
   }

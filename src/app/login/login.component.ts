@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private snackBar: MatSnackBar,
-    private authenticationService: AuthenticationService,
+    private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router
     ) {}
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.isLoggingIn = true
     
-    this.authenticationService.login({
+    this.authService.login({
       email: this.form.value.email,
       password: this.form.value.password
     }).subscribe( (data) => {
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   recoverPassword() {
     this.isRecoveringPassword = true
 
-    this.authenticationService.recoverPassword(this.form.value.email)
+    this.authService.recoverPassword(this.form.value.email)
     .subscribe(() => {
       this.isRecoveringPassword = false
       this.snackBar.open('Você pode recuperar sua senha no seu e-mail cadastrado. Cheque a sua caixa de entrada.', 'OK', {
@@ -67,6 +67,16 @@ export class LoginComponent implements OnInit {
 
   goToHomePage() {
     this.router.navigate([''])
+  }
+
+  onSigninWithGoogle() {
+    this.authService.signinWithGoogle().subscribe(() => {
+      this.router.navigate(['home/galeria'])
+    }, error => {
+      this.snackBar.open(error.message, 'OK', {
+        duration: 5000
+      })
+    })
   }
   
 }
