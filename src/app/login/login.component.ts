@@ -73,9 +73,7 @@ export class LoginComponent implements OnInit {
     this.authService.signinWithGoogle().subscribe(() => {
       this.router.navigate(['home/galeria'])
     }, error => {
-      this.snackBar.open(error.message, 'OK', {
-        duration: 5000
-      })
+      console.error(error.message)
     })
   }
   
