@@ -20,7 +20,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   isLargeScreen = false
   user!: firebase.User | null
   images: ImageProps[] = []
-  previewImage!: ImageProps
+  previewImage!: ImageProps | undefined
   isLoadding$!: Observable<boolean>
   isImagesArrayEmpty$!: Observable<boolean>
   isGalleryMode!: boolean
@@ -73,9 +73,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   fetchImages(userId: string) {
-    this.imagesSubscription = this.firebaseStorageService.getImagesUrls(userId).subscribe(data => { 
-      this.images = data
-      this.imageUrl = this.images[0].url
+    this.imagesSubscription = this.firebaseStorageService.getImagesUrls(userId).subscribe(images => { 
+      this.images = images
+      this.imageUrl = this.images[0]?.url
       this.previewImage = this.images[0]
     }, (error: any) => {
       console.log(error)
@@ -104,7 +104,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
       if(result === "from delete button") {
         this.firebaseStorageService.images.splice(imageIndex, 1)
-        this.showImageInPreview(0)
+        if(this.firebaseStorageService.images.length > 0) {
+          this.changeImageInPreview(0)
+        } else {
+          this.previewImage = undefined
+        }
       }
 
       if(this.firebaseStorageService.images.length === 0) {
@@ -144,7 +148,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   showImageInFullScreen(imageIndex: number) {
     this.isFullScreenMode = true
-    this.imageUrl = this.images[imageIndex].url
+    this.imageUrl = this.images[imageIndex]?.url
   }
 
   showImageInPreview(imageIndex: number) {
@@ -152,8 +156,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.showImageInFullScreen(imageIndex)
     }
     
-    this.imageUrl = this.images[imageIndex].url
+    this.imageUrl = this.images[imageIndex]?.url
     this.previewImage = this.images[imageIndex]
+  }
+
+  changeImageInPreview(imageIndex: number) {
+    this.previewImage = this.images[imageIndex]
+    this.imageUrl = this.images[imageIndex]?.url
   }
 
   closeFullScreenMode() {

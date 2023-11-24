@@ -106,7 +106,7 @@ export class FirebaseStorageService {
     }
 
     if(this.isListResultEmpty) {
-      this.isImagesArrayEmpty.next(true) 
+      this.isImagesArrayEmpty.next(true)
       return of([])
     }
 
@@ -151,6 +151,7 @@ export class FirebaseStorageService {
 
             this.hasNewImage = false
             this._isLoaddingSub.next(false)
+            this.isImagesArrayEmpty.next(false)
             this.isListResultEmpty = false
             this.images = this.sortByLatest(allImages)
             return this.images
