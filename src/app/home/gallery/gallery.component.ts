@@ -48,17 +48,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     const largeScreenWidth = '(min-width: 47.9375em)'
 
     this.breakpointObserver.observe([mediumScreenWidth, largeScreenWidth]).subscribe( ()=> {
-      this.isMediumScreen = false
-
-      if ( this.breakpointObserver.isMatched(mediumScreenWidth) ) { 
-        this.isMediumScreen = true
-        this.isLargeScreen = false
-      }
-      
-      if ( this.breakpointObserver.isMatched(largeScreenWidth) ) {
-        this.isLargeScreen = true
-      }
-      
+      this.isMediumScreen = this.breakpointObserver.isMatched(mediumScreenWidth);
+      this.isLargeScreen = this.breakpointObserver.isMatched(largeScreenWidth);
     })
 
     this.userSubscription = this.authService.user$.subscribe(user => {
