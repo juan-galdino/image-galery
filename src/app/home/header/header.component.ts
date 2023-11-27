@@ -1,10 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/auth/auth.service';
-import { Subscription } from 'rxjs';
-import firebase from 'firebase/compat';
-import { FirebaseStorageService } from 'src/app/firebase-storage.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { AuthenticationService } from 'src/app/auth/auth.service'
+import { Subscription, catchError, from, map, of } from 'rxjs'
+import firebase from 'firebase/compat'
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage'
+import { AngularFireStorage } from '@angular/fire/compat/storage'
 
 @Component({
   selector: 'app-header',
@@ -12,7 +17,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   showSettingsBox = false
   loggedUser!: firebase.User | null
   isLoading = false
@@ -22,63 +26,104 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userSubscription!: Subscription
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private authenticationService: AuthenticationService,
-    private firebaseStorageService: FirebaseStorageService,
-    private snackBar: MatSnackBar 
-    ) {}
+    private changeDetectorRef: ChangeDetectorRef,
+    private storage: AngularFireStorage,
+  ) { }
 
   ngOnInit(): void {
-    this.userSubscription = this.authenticationService.user$
-      .subscribe( user => {
-          if(user) {
-            this.loggedUser = user
-            this.userPhotoURL = user.photoURL
-            this.userName = user.displayName            
-            this.userEmail = user.email
-          }
-      })
+    this.userSubscription = this.authenticationService.user$.subscribe(
+      (user) => {
+        if (user) {
+          this.loggedUser = user
+          this.userPhotoURL = user.photoURL
+          this.userName = user.displayName
+          this.userEmail = user.email
+        }
+      }
+    )
   }
 
   onPhotoSelected(event: any) {
-    if(event.target.files) {
-      this.updateProfilePhoto(event.target.files[0])
-    }
+    if (!event.target.files) return
+    this.updateProfilePhoto(event.target.files[0])
   }
 
   updateProfilePhoto(file: File) {
+    if (!this.loggedUser) return
+
     this.isLoading = true
 
-    if(this.loggedUser) {
-      const newProfilePhotoPath = 'users/' + this.loggedUser.uid + '/profile-photo/' + file.name
+    const storage = getStorage()
+    const newProfilePhotoPath = `users/${this.loggedUser.uid}/profile-photo/${file.name}`
+    const storageRef = ref(storage, newProfilePhotoPath)
 
-      this.firebaseStorageService.uploadProfilePhoto(file, newProfilePhotoPath)
-        .subscribe((value: number | undefined) => {
-          if(this.loggedUser && value === 100) {
-            this.firebaseStorageService.getNewProfilePhotoUrl(newProfilePhotoPath)
-              .subscribe( (url: string) => {
-                this.loggedUser?.updateProfile({photoURL: url})
-                .then(() => {
+    const uploadTask = uploadBytesResumable(storageRef, file)
 
-                  this.isLoading = false
-                  this.userPhotoURL = this.loggedUser!.photoURL
-                  this.snackBar.open('Foto de perfil atualizada com sucesso!', 'OK', { duration: 5000 })
-    
-                  this.firebaseStorageService.deletePreviousProfilePhoto(this.loggedUser, newProfilePhotoPath).subscribe()
-                  }
-                )
-                .catch(err => {
-                  this.snackBar.open('Erro ao atualizar a foto.', 'OK', { duration: 5000 })
-                  this.isLoading = false
-                })
-              }
-            )
-          }
-        })  
-    }
+    uploadTask.on(
+      'state_changed',
+      () => { },
+      (error) => {
+        console.error('Erro ao subir nova imagem de perfil: ', error)
+        this.isLoading = false
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+          this.isLoading = false
+          this.userPhotoURL = downloadUrl
+          this.changeDetectorRef.detectChanges()
 
+          this.updateUserPhotoUrl(downloadUrl)
+          this.deletePreviousProfilePhoto(newProfilePhotoPath)
+        })
+      }
+    )
   }
-  
+
+  updateUserPhotoUrl(url: string) {
+    if (!this.loggedUser) return
+
+    this.loggedUser
+      .updateProfile({ photoURL: url })
+      .then(() => { })
+      .catch((err) => console.error(err))
+  }
+
+  deletePreviousProfilePhoto(newPhotoPath: string) {
+    if (!this.loggedUser) return
+
+    const path = `users/${this.loggedUser.uid}/profile-photo`
+
+    this.storage
+      .ref(path)
+      .list()
+      .pipe(
+        map((listResult) => {
+          const deletePromises: Promise<void>[] = []
+
+          if (listResult.items.length > 1) {
+            listResult.items.forEach((itemRef) => {
+              if (itemRef.fullPath !== newPhotoPath)
+                deletePromises.push(itemRef.delete())
+            })
+
+            return from(Promise.all(deletePromises))
+          } else {
+            return of({})
+          }
+        }),
+        catchError((err) => {
+          console.error('Erro ao listar as fotos', err)
+          throw err
+        })
+      )
+      .subscribe(
+        () => { },
+        (err) => console.error(err)
+      )
+  }
+
   logout() {
     this.authenticationService.logout()
     this.router.navigate(['login'])
@@ -88,5 +133,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe()
   }
-
 }
