@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../auth/auth.service'; 
+import { AuthenticationService } from '../auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router
-    ) {}
-  
+  ) { }
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.isLoggingIn = true
-    
+
     this.authService.login({
       email: this.form.value.email,
       password: this.form.value.password
-    }).subscribe( (data) => {
+    }).subscribe((data) => {
       this.router.navigate(['home/galeria'])
     }, (error: any) => {
       this.isLoggingIn = false
@@ -43,22 +43,22 @@ export class LoginComponent implements OnInit {
       })
     })
   }
-  
+
   recoverPassword() {
     this.isRecoveringPassword = true
 
     this.authService.recoverPassword(this.form.value.email)
-    .subscribe(() => {
-      this.isRecoveringPassword = false
-      this.snackBar.open('Você pode recuperar sua senha no seu e-mail cadastrado. Cheque a sua caixa de entrada.', 'OK', {
-        duration: 5000
+      .subscribe(() => {
+        this.isRecoveringPassword = false
+        this.snackBar.open('Você pode recuperar sua senha no seu e-mail cadastrado. Cheque a sua caixa de entrada.', 'OK', {
+          duration: 5000
+        })
+      }, (error: any) => {
+        this.isRecoveringPassword = false
+        this.snackBar.open(error.message, 'OK', {
+          duration: 5000
+        })
       })
-    }, (error: any) => {
-      this.isRecoveringPassword = false
-      this.snackBar.open(error.message, 'OK', {
-        duration: 5000
-      })
-    })
   }
 
   goToSignupPage() {
@@ -69,12 +69,13 @@ export class LoginComponent implements OnInit {
     this.router.navigate([''])
   }
 
-  onSigninWithGoogle() {
+  onSigninWithGoogle(event: Event) {
+    event.preventDefault()
     this.authService.signinWithGoogle().subscribe(() => {
       this.router.navigate(['home/galeria'])
     }, error => {
       console.error(error.message)
     })
   }
-  
+
 }

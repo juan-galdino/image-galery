@@ -19,7 +19,7 @@ export class SignupComponent implements OnInit {
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -46,7 +46,8 @@ export class SignupComponent implements OnInit {
     })
   }
 
-  onSignupWithGoogle() {
+  onSignupWithGoogle(event: Event) {
+    event.preventDefault()
     this.authService.signinWithGoogle().subscribe(() => {
       this.router.navigate(['home/galeria'])
     }, error => {
