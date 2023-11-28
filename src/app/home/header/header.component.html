@@ -5,11 +5,12 @@
       <ul>
         <li
           routerLinkActive="active"
+          ariaCurrentWhenActive="page"
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a routerLink="galeria">Galeria</a>
         </li>
-        <li routerLinkActive="active">
+        <li routerLinkActive="active" ariaCurrentWhenActive="page">
           <a routerLink="upload">Novo Upload</a>
         </li>
       </ul>
