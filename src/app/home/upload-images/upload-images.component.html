@@ -1,7 +1,8 @@
-<div class="drag-area" appDragAndDrop (fileDropped)="onFileDropped($event)">
+<div class="drag-area" appDragAndDrop (filesDropped)="onFilesDropped($event)">
   <input
     type="file"
-    (change)="onFileSelected($event)"
+    multiple
+    (change)="onFilesSelected($event)"
     accept=".png, .jpg"
     id="fileDropRef"
   />
